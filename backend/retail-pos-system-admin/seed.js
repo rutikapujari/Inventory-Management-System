@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+gitconst mongoose = require('mongoose');
 require('dotenv').config();
 const Stats = require('./models/Stats.js');
 const ChartData = require('./models/ChartData.js');
