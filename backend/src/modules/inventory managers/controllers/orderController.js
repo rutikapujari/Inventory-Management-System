@@ -1,45 +1,42 @@
-﻿const Order = require("../../admin/models/Order");
+const Order = require("../../../models/cashier/Order");
 
 const createOrder = async (req, res) => {
   try {
-    // accept either `productName` or `product` in request body
-    const {
-      productName: pn,
-      product: pAlias,
-      customerName,
-      quantity,
-      price,
-      status,
-    } = req.body;
+    const { customer, cashier, products } = req.body;
 
-    const productName = pn || pAlias;
-
-    if (!productName || !quantity || !price) {
-      return res.status(400).json({ message: "productName, quantity and price are required" });
-    }
-
-    const order = new Order({
-      productName,
-      customerName: customerName || "",
-      quantity,
-      price,
-      total: quantity * price,
-      status: status || "pending",
+    const order = await Order.create({
+      customer,
+      cashier,
+      products: Array.isArray(products) ? products : [],
+      totalAmount: 0,
+      orderNumber: `INV-${Date.now()}`,
     });
 
-    await order.save();
-    return res.status(201).json({ message: "Order created successfully", order });
+    res.status(201).json({
+      success: true,
+      order,
+    });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
 
 const getOrders = async (req, res) => {
   try {
     const orders = await Order.find().sort({ createdAt: -1 });
-    return res.status(200).json({ orders });
+
+    res.status(200).json({
+      success: true,
+      orders,
+    });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
 

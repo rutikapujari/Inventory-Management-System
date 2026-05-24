@@ -1,4 +1,4 @@
-const Product = require("../../../models/inventary manager/Product");
+const Product = require("../../../models/inventaryManagers/Product");
 
 // Create Product
 const createProductService = async (data) => {

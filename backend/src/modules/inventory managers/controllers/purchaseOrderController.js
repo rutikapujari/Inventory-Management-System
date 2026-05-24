@@ -1,4 +1,4 @@
-const PurchaseOrder = require("../../../models/inventary manager/PurchaseOrder");
+const PurchaseOrder = require("../../../models/inventaryManagers/PurchaseOrder");
 
 
 // Create Purchase Order

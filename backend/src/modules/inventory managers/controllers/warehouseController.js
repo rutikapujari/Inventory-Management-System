@@ -1,4 +1,4 @@
-const Warehouse = require("../../../models/inventary manager/Warehouse");
+const Warehouse = require("../../../models/inventaryManagers/Warehouse");
 
 
 // Create Warehouse

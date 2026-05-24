@@ -1,34 +1,17 @@
 const express = require("express");
+
 const router = express.Router();
 
 const {
-  createCart,
-  getCart,
-  updateCart,
-  deleteCart,
-} = require("../controllers/cartController");
+  createOrder,
+  getOrders,
+  updateOrder,
+  deleteOrder,
+} = require("../controllers/orderController");
 
-// IMPORT VALIDATION
-const validateCart = require("../validations/cartValidation");
-
-//
-// 🛒 CREATE CART
-//
-router.post("/create", validateCart, createCart);
-
-//
-// 📦 GET ALL CARTS
-//
-router.get("/", getCart);
-
-//
-// ✏️ UPDATE CART
-//
-router.put("/update/:id", updateCart);
-
-//
-// 🗑️ DELETE CART
-//
-router.delete("/delete/:id", deleteCart);
+router.post("/create", createOrder);
+router.get("/", getOrders);
+router.put("/update/:id", updateOrder);
+router.delete("/delete/:id", deleteOrder);
 
 module.exports = router;

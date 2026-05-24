@@ -1,4 +1,4 @@
-const Stock = require("../../../models/inventary manager/Stock");
+const Stock = require("../../../models/inventaryManagers/Stock");
 
 
 // Create Stock

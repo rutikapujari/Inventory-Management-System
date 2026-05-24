@@ -30,7 +30,7 @@ require("./src/models/cashier/OrderItem");
 require("./src/models/cashier/Payment");
 require("./src/models/cashier/Receipt");
 require("./src/models/cashier/Refund");
-require("./src/models/cashier/Product");
+require("./src/models/cashier/product");
 
 // =========================
 // ROUTES IMPORTS
@@ -39,9 +39,6 @@ require("./src/models/cashier/Product");
 // AUTH
 const authRoutes = require("./src/modules/auth/routes/authRoutes");
 const logoutRoutes = require("./src/modules/auth/routes/logoutRoutes");
-
-// ADMIN / ORDERS
-const orderRoutes = require("./src/modules/admin/routes/orderRoutes");
 
 // CASHIER MODULE
 const cartRoutes = require("./src/modules/cashier/routes/cartRoutes");
@@ -61,18 +58,10 @@ const supplierRoutes = require("./src/modules/inventory managers/routes/supplier
 const stockRoutes = require("./src/modules/inventory managers/routes/stockRoutes");
 const purchaseOrderRoutes = require("./src/modules/inventory managers/routes/purchaseOrderRoutes");
 
-// CONTROLLERS + VALIDATION (Inventory)
+// CONTROLLERS (Inventory)
 const {
   createProduct,
 } = require("./src/modules/inventory managers/controllers/productController");
-
-const validationHandler = require("./src/modules/inventory managers/middleware/validationHandler");
-
-const {
-  createProductValidation,
-} = require("./src/modules/inventory managers/validations/productValidation");
-
-const errorMiddleware = require("./src/modules/inventory managers/middleware/errorMiddleware");
 
 // =========================
 // ROUTES USAGE
@@ -81,10 +70,6 @@ const errorMiddleware = require("./src/modules/inventory managers/middleware/err
 // AUTH
 app.use("/api/auth", authRoutes);
 app.use("/api/auth", logoutRoutes);
-
-// ADMIN
-app.use("/api/orders", orderRoutes);
-app.use("/api/order", orderRoutes);
 
 // CASHIER
 app.use("/api/cart", cartRoutes);
@@ -107,22 +92,16 @@ app.use("/api/purchase-orders", purchaseOrderRoutes);
 // PRODUCT CREATE (extra endpoints)
 app.post(
   "/api/createProduct",
-  createProductValidation,
-  validationHandler,
   createProduct,
 );
 
 app.post(
   "/api/products/create",
-  createProductValidation,
-  validationHandler,
   createProduct,
 );
 
 app.post(
   "/api/products/createProduct",
-  createProductValidation,
-  validationHandler,
   createProduct,
 );
 
@@ -132,10 +111,5 @@ app.post(
 app.get("/", (req, res) => {
   res.send("Inventory Management + Cashier API Running...");
 });
-
-// =========================
-// ERROR HANDLER
-// =========================
-app.use(errorMiddleware);
 
 module.exports = app;

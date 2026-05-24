@@ -1,7 +1,7 @@
-const Product = require("../models/Product");
-const Category = require("../models/Category");
-const Supplier = require("../models/Supplier");
-const Stock = require("../models/Stock");
+const Product = require("../../../models/inventaryManagers/Product");
+const Category = require("../../../models/inventaryManagers/Category");
+const Supplier = require("../../../models/inventaryManagers/Supplier");
+const Stock = require("../../../models/inventaryManagers/Stock");
 
 
 // Dashboard Data

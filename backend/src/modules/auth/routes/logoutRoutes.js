@@ -2,8 +2,11 @@ const express = require("express");
 
 const router = express.Router();
 
-const { logoutUser } = require("../controllers/logoutController");
-
-router.post("/logout", logoutUser);
+router.post("/logout", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Logout successful",
+  });
+});
 
 module.exports = router;

@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-﻿// manage customer orders
-=======
-﻿const Order = require("../../admin/models/Order");
-
-const createOrder = async (req, res) => {
-  try {
-    const { productName, customerName, quantity, price, status } = req.body;
->>>>>>> 4e31da7eac91c44b1e29d803566903314d3bfa9c
-
 const Order = require("../../../models/cashier/Order");
 
 const {
@@ -15,9 +5,6 @@ const {
   generateOrderNumber,
 } = require("../services/orderService");
 
-//
-// 🟢 CREATE ORDER
-//
 const createOrder = async (req, res) => {
   try {
     const { customer, cashier, products } = req.body;
@@ -32,11 +19,10 @@ const createOrder = async (req, res) => {
     if (!Array.isArray(products) || products.length === 0) {
       return res.status(400).json({
         success: false,
-        message: "products must be a non-empty array",
+        message: "Products must be a non-empty array",
       });
     }
 
-    // sanitize products
     const sanitizedProducts = products.map((item) => ({
       productId: item.productId,
       price: Number(item.price || 0),
@@ -54,22 +40,19 @@ const createOrder = async (req, res) => {
       orderNumber,
     });
 
-    return res.status(201).json({
+    res.status(201).json({
       success: true,
       message: "Order created successfully",
       order,
     });
   } catch (error) {
-    return res.status(500).json({
+    res.status(500).json({
       success: false,
       message: error.message,
     });
   }
 };
 
-//
-// 🟡 GET ALL ORDERS
-//
 const getOrders = async (req, res) => {
   try {
     const orders = await Order.find()
@@ -77,25 +60,21 @@ const getOrders = async (req, res) => {
       .populate("cashier")
       .populate("products.productId");
 
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
       orders,
     });
   } catch (error) {
-    return res.status(500).json({
+    res.status(500).json({
       success: false,
       message: error.message,
     });
   }
 };
 
-//
-// ✏️ UPDATE ORDER
-//
 const updateOrder = async (req, res) => {
   try {
     const { id } = req.params;
-
     const order = await Order.findById(id);
 
     if (!order) {
@@ -105,10 +84,9 @@ const updateOrder = async (req, res) => {
       });
     }
 
-    let updatedData = { ...req.body };
+    const updatedData = { ...req.body };
 
-    // update products safely
-    if (req.body.products) {
+    if (Array.isArray(req.body.products) && req.body.products.length > 0) {
       const sanitizedProducts = req.body.products.map((item) => ({
         productId: item.productId,
         price: Number(item.price || 0),
@@ -123,26 +101,22 @@ const updateOrder = async (req, res) => {
       new: true,
     });
 
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
       message: "Order updated successfully",
       order: updatedOrder,
     });
   } catch (error) {
-    return res.status(500).json({
+    res.status(500).json({
       success: false,
       message: error.message,
     });
   }
 };
 
-//
-// 🔴 DELETE ORDER
-//
 const deleteOrder = async (req, res) => {
   try {
     const { id } = req.params;
-
     const order = await Order.findById(id);
 
     if (!order) {
@@ -154,12 +128,12 @@ const deleteOrder = async (req, res) => {
 
     await Order.findByIdAndDelete(id);
 
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
       message: "Order deleted successfully",
     });
   } catch (error) {
-    return res.status(500).json({
+    res.status(500).json({
       success: false,
       message: error.message,
     });

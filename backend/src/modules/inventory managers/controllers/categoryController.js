@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Category = require("../../../models/inventary manager/Category");
+const Category = require("../../../models/inventaryManagers/Category");
 
 
 // Create Category

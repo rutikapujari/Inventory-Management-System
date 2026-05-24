@@ -6,18 +6,8 @@ const {
   createStock,
   getStocks,
 } = require("../controllers/stockController");
-const validationHandler = require("../middleware/validationHandler");
-const {
-  addStockValidation,
-} = require("../validations/stockValidation");
 
-
-// Create Stock
-router.post("/", addStockValidation, validationHandler, createStock);
-
-
-// Get All Stocks
+router.post("/", createStock);
 router.get("/", getStocks);
-
 
 module.exports = router;

@@ -1,4 +1,4 @@
-﻿const express = require("express");
+const express = require("express");
 
 const router = express.Router();
 
@@ -9,26 +9,9 @@ const {
   deletePayment,
 } = require("../controllers/paymentController");
 
-const validatePayment = require("../validations/paymentValidation");
-
-//
-// 🟢 CREATE PAYMENT
-//
-router.post("/create", validatePayment, createPayment);
-
-//
-// 🟡 GET ALL PAYMENTS
-//
+router.post("/create", createPayment);
 router.get("/", getPayments);
-
-//
-// ✏️ UPDATE PAYMENT
-//
 router.put("/update/:id", updatePayment);
-
-//
-// 🔴 DELETE PAYMENT
-//
 router.delete("/delete/:id", deletePayment);
 
 module.exports = router;

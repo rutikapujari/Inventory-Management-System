@@ -1,4 +1,4 @@
-const Supplier = require("../../../models/inventary manager/Supplier");
+const Supplier = require("../../../models/inventaryManagers/Supplier");
 
 
 // Create Supplier
