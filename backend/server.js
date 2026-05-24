@@ -1,5 +1,5 @@
 require("dotenv").config();
-const app = require("./app");
+const app = require("./app.js");
 const dashboardRoutes = require("./src/modules/admin/routes/dashboardRoutes");
 const adminRoutes = require("./src/modules/admin/routes/adminRoutes");
 const analyticsRoutes = require("./src/modules/admin/routes/analyticsRoutes");
