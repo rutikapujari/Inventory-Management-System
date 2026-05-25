@@ -14,4 +14,5 @@ router.post("/create", createCategory);
 router.put("/update/:id", updateCategory);
 router.delete("/delete/:id", deleteCategory);
 
+
 module.exports = router;

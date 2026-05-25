@@ -7,26 +7,17 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      trim: true,
     },
 
     email: {
       type: String,
       required: true,
       unique: true,
-      lowercase: true,
-      trim: true,
     },
 
     password: {
       type: String,
       required: true,
-    },
-
-    phone: {
-      type: String,
-      trim: true,
-      default: "",
     },
 
     role: {
@@ -36,29 +27,29 @@ const userSchema = new mongoose.Schema(
 
       default: "cashier",
     },
-
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
   },
-
   {
     timestamps: true,
   },
 );
 
+<<<<<<< HEAD
+userSchema.pre("save", async function () {
+=======
+// HASH PASSWORD
+
 userSchema.pre("save", async function (next) {
+>>>>>>> 9350bf8dbf02da1bd451b5b9282502f759851cd0
   if (!this.isModified("password")) {
-    return next();
+    return;
   }
 
   const salt = await bcrypt.genSalt(10);
 
   this.password = await bcrypt.hash(this.password, salt);
-
-  next();
 });
+
+// MATCH PASSWORD
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);

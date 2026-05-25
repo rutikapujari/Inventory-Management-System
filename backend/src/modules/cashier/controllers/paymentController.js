@@ -5,13 +5,15 @@ const {
   calculateFinalAmount,
 } = require("../services/paymentService");
 
-//
-// 🟢 CREATE PAYMENT
-//
+// ======================================================
+// CREATE PAYMENT
+// ======================================================
+
 const createPayment = async (req, res) => {
   try {
     const { amount } = req.body;
 
+    // Validate amount
     if (!amount) {
       return res.status(400).json({
         success: false,
@@ -19,9 +21,12 @@ const createPayment = async (req, res) => {
       });
     }
 
+    // Calculate GST & Final Amount
     const gst = calculateGST(amount);
+
     const finalAmount = calculateFinalAmount(amount);
 
+    // Create Payment
     const payment = await Payment.create({
       ...req.body,
       gst,
@@ -30,7 +35,7 @@ const createPayment = async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      message: "Payment successful",
+      message: "Payment created successfully",
       payment,
     });
   } catch (error) {
@@ -41,15 +46,17 @@ const createPayment = async (req, res) => {
   }
 };
 
-//
-// 🟡 GET ALL PAYMENTS
-//
+// ======================================================
+// GET ALL PAYMENTS
+// ======================================================
+
 const getPayments = async (req, res) => {
   try {
-    const payments = await Payment.find().populate("order"); // ✅ ONLY THIS IS VALID
+    const payments = await Payment.find().populate("order");
 
     return res.status(200).json({
       success: true,
+      count: payments.length,
       payments,
     });
   } catch (error) {
@@ -60,9 +67,39 @@ const getPayments = async (req, res) => {
   }
 };
 
-//
-// ✏️ UPDATE PAYMENT
-//
+// ======================================================
+// GET SINGLE PAYMENT
+// ======================================================
+
+const getSinglePayment = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const payment = await Payment.findById(id).populate("order");
+
+    if (!payment) {
+      return res.status(404).json({
+        success: false,
+        message: "Payment not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      payment,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// ======================================================
+// UPDATE PAYMENT
+// ======================================================
+
 const updatePayment = async (req, res) => {
   try {
     const { id } = req.params;
@@ -78,8 +115,10 @@ const updatePayment = async (req, res) => {
 
     let updatedData = { ...req.body };
 
+    // Recalculate GST if amount changes
     if (req.body.amount) {
       const gst = calculateGST(req.body.amount);
+
       const finalAmount = calculateFinalAmount(req.body.amount);
 
       updatedData.gst = gst;
@@ -103,9 +142,10 @@ const updatePayment = async (req, res) => {
   }
 };
 
-//
-// 🔴 DELETE PAYMENT
-//
+// ======================================================
+// DELETE PAYMENT
+// ======================================================
+
 const deletePayment = async (req, res) => {
   try {
     const { id } = req.params;
@@ -133,9 +173,14 @@ const deletePayment = async (req, res) => {
   }
 };
 
+// ======================================================
+// EXPORTS
+// ======================================================
+
 module.exports = {
   createPayment,
   getPayments,
+  getSinglePayment,
   updatePayment,
   deletePayment,
 };
