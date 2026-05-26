@@ -20,10 +20,14 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
 
+    phone: {
+      type: String,
+    },
+
     role: {
       type: String,
 
-      enum: ["admin", "cashier", "inventory-manager"],
+      enum: ["admin", "cashier", "inventory-manager", "manager"],
 
       default: "cashier",
     },
@@ -33,13 +37,9 @@ const userSchema = new mongoose.Schema(
   },
 );
 
-<<<<<<< HEAD
-userSchema.pre("save", async function () {
-=======
 // HASH PASSWORD
 
-userSchema.pre("save", async function (next) {
->>>>>>> 9350bf8dbf02da1bd451b5b9282502f759851cd0
+userSchema.pre("save", async function () {
   if (!this.isModified("password")) {
     return;
   }

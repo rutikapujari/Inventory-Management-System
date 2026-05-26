@@ -56,76 +56,76 @@ const getCustomers = async (req, res) => {
 //
 // ✏️ UPDATE CUSTOMER
 //
-const updateCustomer = async (req, res) => {
-  try {
-    const customerId = req.params.id;
+// const updateCustomer = async (req, res) => {
+//   try {
+//     const customerId = req.params.id;
 
-    const existingCustomer = await Customer.findById(customerId);
+//     const existingCustomer = await Customer.findById(customerId);
 
-    if (!existingCustomer) {
-      return res.status(404).json({
-        success: false,
-        message: "Customer not found",
-      });
-    }
+//     if (!existingCustomer) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Customer not found",
+//       });
+//     }
 
-    let updatedData = { ...req.body };
+//     let updatedData = { ...req.body };
 
-    // recalculate loyalty if totalSpent is updated
-    if (req.body.totalSpent !== undefined) {
-      const loyaltyPoints = addLoyaltyPoints(req.body.totalSpent);
-      const customerType = getCustomerType(loyaltyPoints);
+//     // recalculate loyalty if totalSpent is updated
+//     if (req.body.totalSpent !== undefined) {
+//       const loyaltyPoints = addLoyaltyPoints(req.body.totalSpent);
+//       const customerType = getCustomerType(loyaltyPoints);
 
-      updatedData.loyaltyPoints = loyaltyPoints;
-      updatedData.customerType = customerType;
-    }
+//       updatedData.loyaltyPoints = loyaltyPoints;
+//       updatedData.customerType = customerType;
+//     }
 
-    const customer = await Customer.findByIdAndUpdate(customerId, updatedData, {
-      new: true,
-    });
+//     const customer = await Customer.findByIdAndUpdate(customerId, updatedData, {
+//       new: true,
+//     });
 
-    res.status(200).json({
-      success: true,
-      message: "Customer updated successfully",
-      customer,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+//     res.status(200).json({
+//       success: true,
+//       message: "Customer updated successfully",
+//       customer,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
 
 //
 // 🔴 DELETE CUSTOMER
 //
-const deleteCustomer = async (req, res) => {
-  try {
-    const customerId = req.params.id;
+// const deleteCustomer = async (req, res) => {
+//   try {
+//     const customerId = req.params.id;
 
-    const customer = await Customer.findById(customerId);
+//     const customer = await Customer.findById(customerId);
 
-    if (!customer) {
-      return res.status(404).json({
-        success: false,
-        message: "Customer not found",
-      });
-    }
+//     if (!customer) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Customer not found",
+//       });
+//     }
 
-    await Customer.findByIdAndDelete(customerId);
+//     await Customer.findByIdAndDelete(customerId);
 
-    res.status(200).json({
-      success: true,
-      message: "Customer deleted successfully",
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+//     res.status(200).json({
+//       success: true,
+//       message: "Customer deleted successfully",
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
 
 //
 // EXPORT ALL
@@ -133,6 +133,6 @@ const deleteCustomer = async (req, res) => {
 module.exports = {
   createCustomer,
   getCustomers,
-  updateCustomer,
-  deleteCustomer,
+  //updateCustomer,
+  //deleteCustomer,
 };

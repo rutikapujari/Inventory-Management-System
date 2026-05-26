@@ -1,0 +1,35 @@
+(node:34040) [MONGOOSE] Warning: mongoose: the `new` option for `findOneAndUpdate()` and `findOneAndReplace()` is deprecated. Use `returnDocument: 'after'` instead.
+(Use `node --trace-warnings ...` to show where the warning was created)
+SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+    at createStrictSyntaxError (C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\body-parser\lib\types\json.js:109:10)
+    at parse (C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\body-parser\lib\types\json.js:66:15)
+    at C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\body-parser\lib\read.js:162:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+    at invokeCallback (C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\raw-body\index.js:238:16)
+    at done (C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\raw-body\index.js:227:7)
+    at IncomingMessage.onEnd (C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\raw-body\index.js:287:7)
+    at IncomingMessage.emit (node:events:518:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+    at createStrictSyntaxError (C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\body-parser\lib\types\json.js:109:10)
+    at parse (C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\body-parser\lib\types\json.js:66:15)
+    at C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\body-parser\lib\read.js:162:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+    at invokeCallback (C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\raw-body\index.js:238:16)
+    at done (C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\raw-body\index.js:227:7)
+    at IncomingMessage.onEnd (C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\raw-body\index.js:287:7)
+    at IncomingMessage.emit (node:events:518:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+    at createStrictSyntaxError (C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\body-parser\lib\types\json.js:109:10)
+    at parse (C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\body-parser\lib\types\json.js:66:15)
+    at C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\body-parser\lib\read.js:162:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+    at invokeCallback (C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\raw-body\index.js:238:16)
+    at done (C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\raw-body\index.js:227:7)
+    at IncomingMessage.onEnd (C:\Users\RUTIKA\OneDrive\Desktop\Infotect\backend\node_modules\raw-body\index.js:287:7)
+    at IncomingMessage.emit (node:events:518:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)

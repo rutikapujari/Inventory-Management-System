@@ -7,25 +7,14 @@ const router = express.Router();
 const {
   createOrder,
   getOrders,
-  updateOrder,
-  deleteOrder,
+  //updateOrder,
+  //deleteOrder,
 } = require("../controllers/orderController");
-
-// ================= MIDDLEWARES =================
-
-const protect = require("../../../middlewares/authMiddleware");
-
-const authorizeRoles = require("../../../middlewares/roleMiddleware");
 
 // ================= CREATE ORDER =================
 
 router.post(
   "/create",
-
-  protect,
-
-  authorizeRoles("cashier", "admin"),
-
   createOrder,
 );
 
@@ -33,36 +22,31 @@ router.post(
 
 router.get(
   "/",
-
-  protect,
-
-  authorizeRoles("cashier", "admin"),
-
   getOrders,
 );
 
 // ================= UPDATE ORDER =================
 
-router.put(
-  "/update/:id",
+// router.put(
+//   "/update/:id",
 
-  protect,
+//   protect,
 
-  authorizeRoles("cashier", "admin"),
+//   authorizeRoles("cashier", "admin"),
 
-  updateOrder,
-);
+//   updateOrder,
+// );
 
 // ================= DELETE ORDER =================
 
-router.delete(
-  "/delete/:id",
+// router.delete(
+//   "/delete/:id",
 
-  protect,
+//   protect,
 
-  authorizeRoles("admin"),
+//   authorizeRoles("admin"),
 
-  deleteOrder,
-);
+//   deleteOrder,
+// );
 
 module.exports = router;

@@ -48,6 +48,8 @@ require("./src/models/cashier/Receipt");
 
 require("./src/models/cashier/Refund");
 
+require("./src/models/cashier/Transaction");
+
 require("./src/models/cashier/product");
 
 // =========================
@@ -64,9 +66,25 @@ const logoutRoutes = require("./src/modules/auth/routes/logoutRoutes");
 
 const adminRoutes = require("./src/modules/admin/routes/adminRoutes");
 
+const dashboardRoutes = require("./src/modules/admin/routes/dashboardRoutes");
+
+const analyticsRoutes = require("./src/modules/admin/routes/analyticsRoutes");
+
+const reportRoutes = require("./src/modules/admin/routes/reportRoutes");
+
+const settingsRoutes = require("./src/modules/admin/routes/settingsRoutes");
+
+const notificationRoutes = require("./src/modules/admin/routes/notificationRoutes");
+
+const userManagementRoutes = require("./src/modules/admin/routes/userManagementRoutes");
+
+const accessRoutes = require("./src/modules/admin/routes/accessRoutes");
+
 // CASHIER
 
 const cartRoutes = require("./src/modules/cashier/routes/cartRoutes");
+
+const cashierRoutes = require("./src/modules/cashier/routes/cashierRoutes");
 
 const cashierOrderRoutes = require("./src/modules/cashier/routes/orderRoutes");
 
@@ -77,6 +95,8 @@ const receiptRoutes = require("./src/modules/cashier/routes/receiptRoutes");
 const invoiceRoutes = require("./src/modules/cashier/routes/invoiceRoutes");
 
 const refundRoutes = require("./src/modules/cashier/routes/refundRoutes");
+
+const transactionRoutes = require("./src/modules/cashier/routes/transactionRoutes");
 
 const customerRoutes = require("./src/modules/cashier/routes/customerRoutes");
 
@@ -118,9 +138,27 @@ app.use("/api/auth", logoutRoutes);
 
 app.use("/api/admin", adminRoutes);
 
+app.use("/api/dashboard", dashboardRoutes);
+
+app.use("/api/manager/dashboard", dashboardRoutes);
+
+app.use("/api/analytics", analyticsRoutes);
+
+app.use("/api/reports", reportRoutes);
+
+app.use("/api/settings", settingsRoutes);
+
+app.use("/api/notifications", notificationRoutes);
+
+app.use("/api/users", userManagementRoutes);
+
+app.use("/api/access", accessRoutes);
+
 // CASHIER
 
 app.use("/api/cart", cartRoutes);
+
+app.use("/api/cashier", cashierRoutes);
 
 app.use("/api/order", cashierOrderRoutes);
 
@@ -131,6 +169,10 @@ app.use("/api/receipt", receiptRoutes);
 app.use("/api/invoice", invoiceRoutes);
 
 app.use("/api/refund", refundRoutes);
+
+app.use("/api/transaction", transactionRoutes);
+
+app.use("/api/transactions", transactionRoutes);
 
 app.use("/api/customer", customerRoutes);
 

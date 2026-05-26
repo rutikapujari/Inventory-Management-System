@@ -69,78 +69,78 @@ const getCart = async (req, res) => {
 //
 // ✏️ UPDATE CART
 //
-const updateCart = async (req, res) => {
-  try {
-    const cartId = req.params.id;
+// const updateCart = async (req, res) => {
+//   try {
+//     const cartId = req.params.id;
 
-    const cart = await Cart.findById(cartId);
+//     const cart = await Cart.findById(cartId);
 
-    if (!cart) {
-      return res.status(404).json({
-        success: false,
-        message: "Cart not found",
-      });
-    }
+//     if (!cart) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Cart not found",
+//       });
+//     }
 
-    const { items, tax = 0, discount = 0 } = req.body;
+//     const { items, tax = 0, discount = 0 } = req.body;
 
-    let updatedData = { ...req.body };
+//     let updatedData = { ...req.body };
 
-    if (Array.isArray(items) && items.length > 0) {
-      const totalPrice = items.reduce((sum, item) => {
-        return sum + Number(item.price || 0) * Number(item.quantity || 0);
-      }, 0);
+//     if (Array.isArray(items) && items.length > 0) {
+//       const totalPrice = items.reduce((sum, item) => {
+//         return sum + Number(item.price || 0) * Number(item.quantity || 0);
+//       }, 0);
 
-      updatedData.totalPrice = totalPrice;
-      updatedData.grandTotal = totalPrice + Number(tax) - Number(discount);
-    }
+//       updatedData.totalPrice = totalPrice;
+//       updatedData.grandTotal = totalPrice + Number(tax) - Number(discount);
+//     }
 
-    const updatedCart = await Cart.findByIdAndUpdate(cartId, updatedData, {
-      new: true,
-    });
+//     const updatedCart = await Cart.findByIdAndUpdate(cartId, updatedData, {
+//       new: true,
+//     });
 
-    return res.status(200).json({
-      success: true,
-      message: "Cart updated successfully",
-      cart: updatedCart,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+//     return res.status(200).json({
+//       success: true,
+//       message: "Cart updated successfully",
+//       cart: updatedCart,
+//     });
+//   } catch (error) {
+//     return res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
 
 //
 // 🗑️ DELETE CART
 //
-const deleteCart = async (req, res) => {
-  try {
-    const cartId = req.params.id;
+// const deleteCart = async (req, res) => {
+//   try {
+//     const cartId = req.params.id;
 
-    const cart = await Cart.findById(cartId);
+//     const cart = await Cart.findById(cartId);
 
-    if (!cart) {
-      return res.status(404).json({
-        success: false,
-        message: "Cart not found",
-      });
-    }
+//     if (!cart) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Cart not found",
+//       });
+//     }
 
-    await Cart.findByIdAndDelete(cartId);
+//     await Cart.findByIdAndDelete(cartId);
 
-    return res.status(200).json({
-      success: true,
-      message: "Cart deleted successfully",
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+//     return res.status(200).json({
+//       success: true,
+//       message: "Cart deleted successfully",
+//     });
+//   } catch (error) {
+//     return res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
 
 //
 // EXPORT
@@ -148,6 +148,6 @@ const deleteCart = async (req, res) => {
 module.exports = {
   createCart,
   getCart,
-  updateCart,
-  deleteCart,
+  //updateCart,
+  //deleteCart,
 };

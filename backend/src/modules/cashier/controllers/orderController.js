@@ -7,9 +7,10 @@ const {
 
 const createOrder = async (req, res) => {
   try {
-    const { customer, cashier, products } = req.body;
+    const { customer, cashier, products, paymentStatus, orderStatus } = req.body;
+    const cashierId = cashier || req.user?.id;
 
-    if (!customer || !cashier) {
+    if (!customer || !cashierId) {
       return res.status(400).json({
         success: false,
         message: "Customer and cashier are required",
@@ -34,10 +35,12 @@ const createOrder = async (req, res) => {
 
     const order = await Order.create({
       customer,
-      cashier,
+      cashier: cashierId,
       products: sanitizedProducts,
       totalAmount,
       orderNumber,
+      paymentStatus,
+      orderStatus,
     });
 
     res.status(201).json({
@@ -72,77 +75,77 @@ const getOrders = async (req, res) => {
   }
 };
 
-const updateOrder = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const order = await Order.findById(id);
+// const updateOrder = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const order = await Order.findById(id);
 
-    if (!order) {
-      return res.status(404).json({
-        success: false,
-        message: "Order not found",
-      });
-    }
+//     if (!order) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Order not found",
+//       });
+//     }
 
-    const updatedData = { ...req.body };
+//     const updatedData = { ...req.body };
 
-    if (Array.isArray(req.body.products) && req.body.products.length > 0) {
-      const sanitizedProducts = req.body.products.map((item) => ({
-        productId: item.productId,
-        price: Number(item.price || 0),
-        quantity: Number(item.quantity || 1),
-      }));
+//     if (Array.isArray(req.body.products) && req.body.products.length > 0) {
+//       const sanitizedProducts = req.body.products.map((item) => ({
+//         productId: item.productId,
+//         price: Number(item.price || 0),
+//         quantity: Number(item.quantity || 1),
+//       }));
 
-      updatedData.products = sanitizedProducts;
-      updatedData.totalAmount = calculateTotal(sanitizedProducts);
-    }
+//       updatedData.products = sanitizedProducts;
+//       updatedData.totalAmount = calculateTotal(sanitizedProducts);
+//     }
 
-    const updatedOrder = await Order.findByIdAndUpdate(id, updatedData, {
-      new: true,
-    });
+//     const updatedOrder = await Order.findByIdAndUpdate(id, updatedData, {
+//       new: true,
+//     });
 
-    res.status(200).json({
-      success: true,
-      message: "Order updated successfully",
-      order: updatedOrder,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+//     res.status(200).json({
+//       success: true,
+//       message: "Order updated successfully",
+//       order: updatedOrder,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
 
-const deleteOrder = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const order = await Order.findById(id);
+// const deleteOrder = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const order = await Order.findById(id);
 
-    if (!order) {
-      return res.status(404).json({
-        success: false,
-        message: "Order not found",
-      });
-    }
+//     if (!order) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Order not found",
+//       });
+//     }
 
-    await Order.findByIdAndDelete(id);
+//     await Order.findByIdAndDelete(id);
 
-    res.status(200).json({
-      success: true,
-      message: "Order deleted successfully",
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+//     res.status(200).json({
+//       success: true,
+//       message: "Order deleted successfully",
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
 
 module.exports = {
   createOrder,
   getOrders,
-  updateOrder,
-  deleteOrder,
+  //updateOrder,
+  //deleteOrder,
 };

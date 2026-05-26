@@ -42,69 +42,69 @@ const getDiscounts = async (req, res) => {
 //
 // ✏️ UPDATE DISCOUNT
 //
-const updateDiscount = async (req, res) => {
-  try {
-    const { id } = req.params;
+// const updateDiscount = async (req, res) => {
+//   try {
+//     const { id } = req.params;
 
-    const discount = await Discount.findById(id);
+//     const discount = await Discount.findById(id);
 
-    if (!discount) {
-      return res.status(404).json({
-        success: false,
-        message: "Discount not found",
-      });
-    }
+//     if (!discount) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Discount not found",
+//       });
+//     }
 
-    const updatedDiscount = await Discount.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
+//     const updatedDiscount = await Discount.findByIdAndUpdate(id, req.body, {
+//       new: true,
+//     });
 
-    return res.status(200).json({
-      success: true,
-      message: "Discount updated successfully",
-      discount: updatedDiscount,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+//     return res.status(200).json({
+//       success: true,
+//       message: "Discount updated successfully",
+//       discount: updatedDiscount,
+//     });
+//   } catch (error) {
+//     return res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
 
 //
 // 🔴 DELETE DISCOUNT
 //
-const deleteDiscount = async (req, res) => {
-  try {
-    const { id } = req.params;
+// const deleteDiscount = async (req, res) => {
+//   try {
+//     const { id } = req.params;
 
-    const discount = await Discount.findById(id);
+//     const discount = await Discount.findById(id);
 
-    if (!discount) {
-      return res.status(404).json({
-        success: false,
-        message: "Discount not found",
-      });
-    }
+//     if (!discount) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Discount not found",
+//       });
+//     }
 
-    await Discount.findByIdAndDelete(id);
+//     await Discount.findByIdAndDelete(id);
 
-    return res.status(200).json({
-      success: true,
-      message: "Discount deleted successfully",
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+//     return res.status(200).json({
+//       success: true,
+//       message: "Discount deleted successfully",
+//     });
+//   } catch (error) {
+//     return res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
 
 module.exports = {
   createDiscount,
   getDiscounts,
-  updateDiscount,
-  deleteDiscount,
+  //updateDiscount,
+  //deleteDiscount,
 };

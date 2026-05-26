@@ -5,8 +5,8 @@ const router = express.Router();
 const {
   createRefund,
   getRefunds,
-  updateRefund,
-  deleteRefund,
+  //updateRefund,
+  //deleteRefund,
 } = require("../controllers/refundController");
 
 //
@@ -22,11 +22,11 @@ router.get("/", getRefunds);
 //
 // ✏️ UPDATE REFUND
 //
-router.put("/update/:id", updateRefund);
+//router.put("/update/:id", updateRefund);
 
 //
 // 🔴 DELETE REFUND
 //
-router.delete("/delete/:id", deleteRefund);
+//router.delete("/delete/:id", deleteRefund);
 
 module.exports = router;

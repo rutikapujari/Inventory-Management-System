@@ -8,8 +8,8 @@ const {
   createPayment,
   getPayments,
   getSinglePayment,
-  updatePayment,
-  deletePayment,
+  // updatePayment,
+  // deletePayment,
 } = require("../controllers/paymentController");
 
 // ================= MIDDLEWARES =================
@@ -52,15 +52,15 @@ router.get(
 
 // ================= UPDATE PAYMENT =================
 
-router.put(
-  "/update/:id",
-  protect,
-  authorizeRoles("admin", "cashier"),
-  updatePayment,
-);
+// router.put(
+//   "/update/:id",
+//   protect,
+//   authorizeRoles("admin", "cashier"),
+//   updatePayment,
+// );
 
 // ================= DELETE PAYMENT =================
 
-router.delete("/delete/:id", protect, authorizeRoles("admin"), deletePayment);
+// router.delete("/delete/:id", protect, authorizeRoles("admin"), deletePayment);
 
 module.exports = router;

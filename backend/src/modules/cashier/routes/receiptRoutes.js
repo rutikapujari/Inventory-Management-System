@@ -5,8 +5,8 @@ const router = express.Router();
 const {
   createReceipt,
   getReceipts,
-  updateReceipt,
-  deleteReceipt,
+  //updateReceipt,
+  //deleteReceipt,
 } = require("../controllers/receiptController");
 
 //
@@ -22,11 +22,11 @@ router.get("/", getReceipts);
 //
 // ✏️ UPDATE RECEIPT
 //
-router.put("/update/:id", updateReceipt);
+//router.put("/update/:id", updateReceipt);
 
 //
 // 🔴 DELETE RECEIPT
 //
-router.delete("/delete/:id", deleteReceipt);
+//router.delete("/delete/:id", deleteReceipt);
 
 module.exports = router;

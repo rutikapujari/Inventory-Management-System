@@ -1,6 +1,7 @@
 const User = require("../../../models/auth/userModel");
 
 const generateToken = require("../../../utils/generateToken");
+const getPanelConfig = require("../../../utils/getPanelConfig");
 
 const registerUser = async (req, res) => {
   try {
@@ -63,11 +64,14 @@ const loginUser = async (req, res) => {
     }
 
     const token = generateToken(user);
+    const panelConfig = getPanelConfig(user.role);
 
     res.status(200).json({
       success: true,
       token,
       user,
+      panel: panelConfig.panel,
+      dashboardRoute: panelConfig.dashboardRoute,
     });
   } catch (error) {
     res.status(500).json({

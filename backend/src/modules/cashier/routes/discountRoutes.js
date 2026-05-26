@@ -5,8 +5,8 @@ const router = express.Router();
 const {
   createDiscount,
   getDiscounts,
-  updateDiscount,
-  deleteDiscount,
+  //updateDiscount,
+  //deleteDiscount,
 } = require("../controllers/discountController");
 
 //
@@ -22,11 +22,11 @@ router.get("/", getDiscounts);
 //
 // ✏️ UPDATE DISCOUNT
 //
-router.put("/update/:id", updateDiscount);
+//router.put("/update/:id", updateDiscount);
 
 //
 // 🔴 DELETE DISCOUNT
 //
-router.delete("/delete/:id", deleteDiscount);
+//router.delete("/delete/:id", deleteDiscount);
 
 module.exports = router;
