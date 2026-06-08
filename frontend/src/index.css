@@ -723,9 +723,9 @@ main div:has(input):has(button) > a {
 [data-manager-menu-button] {
   position: fixed;
   top: 1rem;
-  left: 1rem;
+  left: 18rem;
   z-index: 9999;
-  display: none;
+  display: flex;
   width: 2.75rem;
   height: 2.75rem;
   align-items: center;
@@ -753,7 +753,7 @@ body.manager-sidebar-open [data-manager-menu-button] {
 
 @media (max-width: 1100px) {
   [data-manager-menu-button] {
-    display: flex;
+    left: 1rem;
   }
 
   body:has([data-manager-menu-button]) aside,
