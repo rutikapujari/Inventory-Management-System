@@ -1029,6 +1029,11 @@ body.auth-page #root form > button {
   border-radius: 0.75rem !important;
 }
 
+body.auth-page.register-page #root :is(div, section, article):has(> form) {
+  width: min(100%, 34rem) !important;
+  max-width: 34rem !important;
+}
+
 @media (max-width: 1100px) {
   [data-manager-menu-button] {
     left: 1rem;
