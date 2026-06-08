@@ -631,6 +631,95 @@ main .grid:has(> div [class*="green"]) > div {
   }
 }
 
+/* Suppliers page final sizing: compact cards and keep Add Supplier button visible. */
+main [class*="md:grid-cols-2"]:has(> div [class*="green"]),
+main [class*="lg:grid-cols-2"]:has(> div [class*="green"]),
+main [class*="grid-cols-2"]:has(> div [class*="green"]) {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 18rem)) !important;
+  justify-content: start !important;
+  gap: 1rem !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+main [class*="md:grid-cols-2"]:has(> div [class*="green"]) > div,
+main [class*="lg:grid-cols-2"]:has(> div [class*="green"]) > div,
+main [class*="grid-cols-2"]:has(> div [class*="green"]) > div {
+  width: 18rem !important;
+  max-width: 18rem !important;
+  height: 17rem !important;
+  min-height: 17rem !important;
+  max-height: 17rem !important;
+  overflow: hidden !important;
+}
+
+main [class*="md:grid-cols-2"]:has(> div [class*="green"]) > div [class*="green"],
+main [class*="lg:grid-cols-2"]:has(> div [class*="green"]) > div [class*="green"],
+main [class*="grid-cols-2"]:has(> div [class*="green"]) > div [class*="green"] {
+  height: 4.75rem !important;
+  min-height: 4.75rem !important;
+  padding: 0.7rem 0.85rem !important;
+}
+
+main [class*="md:grid-cols-2"]:has(> div [class*="green"]) > div [class*="green"] :is(img, .rounded-full),
+main [class*="lg:grid-cols-2"]:has(> div [class*="green"]) > div [class*="green"] :is(img, .rounded-full),
+main [class*="grid-cols-2"]:has(> div [class*="green"]) > div [class*="green"] :is(img, .rounded-full) {
+  width: 2.65rem !important;
+  height: 2.65rem !important;
+  min-width: 2.65rem !important;
+}
+
+main [class*="md:grid-cols-2"]:has(> div [class*="green"]) > div [class*="green"] :is(h1, h2, h3, .text-xl, .text-2xl),
+main [class*="lg:grid-cols-2"]:has(> div [class*="green"]) > div [class*="green"] :is(h1, h2, h3, .text-xl, .text-2xl),
+main [class*="grid-cols-2"]:has(> div [class*="green"]) > div [class*="green"] :is(h1, h2, h3, .text-xl, .text-2xl) {
+  font-size: 0.95rem !important;
+  line-height: 1.15 !important;
+}
+
+main [class*="md:grid-cols-2"]:has(> div [class*="green"]) > div [class*="green"] + div,
+main [class*="lg:grid-cols-2"]:has(> div [class*="green"]) > div [class*="green"] + div,
+main [class*="grid-cols-2"]:has(> div [class*="green"]) > div [class*="green"] + div {
+  padding: 0.65rem 0.85rem !important;
+}
+
+main [class*="md:grid-cols-2"]:has(> div [class*="green"]) > div [class*="green"] + div :is(p, span, div),
+main [class*="lg:grid-cols-2"]:has(> div [class*="green"]) > div [class*="green"] + div :is(p, span, div),
+main [class*="grid-cols-2"]:has(> div [class*="green"]) > div [class*="green"] + div :is(p, span, div) {
+  font-size: 0.75rem !important;
+  line-height: 1.15 !important;
+}
+
+main section:has(input):has(button),
+main div:has(input):has(button) {
+  overflow: visible !important;
+}
+
+main div:has(> input) {
+  min-width: 0 !important;
+}
+
+main div:has(input):has(button) {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 1rem !important;
+}
+
+main div:has(input):has(button) > :has(input) {
+  flex: 1 1 18rem !important;
+  min-width: 0 !important;
+}
+
+main div:has(input):has(button) > button,
+main div:has(input):has(button) > a {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 9.5rem !important;
+  max-width: 100% !important;
+  white-space: nowrap !important;
+}
+
 main .grid.grid-cols-4 :is(h1, h2, h3, p, span),
 .grid.grid-cols-4 :is(h1, h2, h3, p, span) {
   max-width: 100%;
