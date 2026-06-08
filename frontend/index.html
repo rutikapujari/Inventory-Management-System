@@ -31,17 +31,9 @@
             return;
           }
 
-          if (!button) {
-            button = document.createElement("button");
-            button.type = "button";
-            button.setAttribute("data-manager-menu-button", "true");
-            button.setAttribute("aria-label", "Open manager menu");
-            button.innerHTML = "<span></span><span></span><span></span>";
-            button.addEventListener("click", () => {
-              document.body.classList.toggle("manager-sidebar-open");
-            });
-            document.body.appendChild(button);
-          }
+          document.querySelectorAll("[data-manager-menu-button]").forEach((menuButton) => {
+            menuButton.remove();
+          });
         };
 
         syncManagerMenu();
