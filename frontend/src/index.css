@@ -228,6 +228,132 @@ main [class*="from-green"][class*="to-"] + div a {
   padding-bottom: 0.5rem !important;
 }
 
+/* Final manager responsive cleanup. Keep dashboard pages tidy across laptop and mobile widths. */
+html,
+body,
+#root {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+main,
+main > *,
+main section,
+main .grid,
+main .flex {
+  min-width: 0;
+}
+
+main {
+  width: 100%;
+  max-width: 100%;
+}
+
+main .grid {
+  align-items: stretch;
+}
+
+main .grid.grid-cols-4 {
+  grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr)) !important;
+  gap: 1.25rem !important;
+}
+
+main .grid.grid-cols-3 {
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)) !important;
+}
+
+main .grid.grid-cols-2 {
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)) !important;
+}
+
+main .grid.grid-cols-4 > * {
+  display: flex;
+  min-height: 8.25rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem !important;
+  overflow: hidden;
+}
+
+main .grid.grid-cols-4 > * > :first-child {
+  min-width: 0;
+  max-width: calc(100% - 4.75rem);
+}
+
+main .grid.grid-cols-4 > * > :last-child {
+  position: static !important;
+  flex: 0 0 4rem;
+  width: 4rem !important;
+  height: 4rem !important;
+  margin-left: auto;
+  transform: none !important;
+}
+
+main .grid.grid-cols-4 > * > :last-child :is(svg, img) {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+main .grid.grid-cols-4 :is(.text-4xl, .text-5xl, .text-6xl) {
+  font-size: clamp(1.75rem, 2.15vw, 2.5rem) !important;
+  line-height: 1.08 !important;
+  letter-spacing: 0 !important;
+}
+
+main table {
+  width: 100%;
+  table-layout: auto;
+}
+
+main th,
+main td {
+  vertical-align: middle;
+  word-break: normal;
+}
+
+main td :is(h1, h2, h3, p, span, div) {
+  word-break: normal;
+}
+
+main td:first-child {
+  min-width: 12rem;
+  max-width: 20rem;
+}
+
+main td:first-child > div {
+  gap: 1rem;
+}
+
+main td:first-child img {
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+}
+
+@media (max-width: 1180px) {
+  main .grid.grid-cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  main {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  main .grid.grid-cols-4,
+  main .grid.grid-cols-3,
+  main .grid.grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  main .grid.grid-cols-4 > * {
+    min-height: auto;
+  }
+}
+
 main .grid.grid-cols-4 :is(h1, h2, h3, p, span),
 .grid.grid-cols-4 :is(h1, h2, h3, p, span) {
   max-width: 100%;
