@@ -806,12 +806,12 @@ body.auth-page form {
 }
 
 body.auth-page form > * + * {
-  margin-top: 1rem !important;
+  margin-top: 0.75rem !important;
 }
 
 body.auth-page input {
   width: 100% !important;
-  min-height: 3rem !important;
+  min-height: 2.75rem !important;
   font-size: 0.95rem !important;
   border: 0 !important;
   outline: 0 !important;
@@ -819,7 +819,7 @@ body.auth-page input {
 
 body.auth-page button {
   width: 100% !important;
-  min-height: 3rem !important;
+  min-height: 2.75rem !important;
 }
 
 body.auth-page :is(h1, h2) {
@@ -981,13 +981,13 @@ body.auth-page #root > div {
 
 body.auth-page #root :is(div, section, article):has(> form),
 body.auth-page #root form {
-  width: min(100%, 26rem) !important;
-  max-width: 26rem !important;
+  width: min(100%, 32rem) !important;
+  max-width: 32rem !important;
 }
 
 body.auth-page #root :is(div, section, article):has(> form) {
   min-height: auto !important;
-  padding: 2rem !important;
+  padding: 1.75rem 2.25rem !important;
   border-radius: 1.25rem !important;
 }
 
