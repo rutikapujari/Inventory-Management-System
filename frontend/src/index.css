@@ -233,7 +233,7 @@ html,
 body,
 #root {
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
 }
 
 main,
@@ -247,6 +247,20 @@ main .flex {
 main {
   width: 100%;
   max-width: 100%;
+  overflow-x: hidden !important;
+}
+
+main > *,
+main section,
+main article,
+main div {
+  max-width: 100%;
+}
+
+main [class*="overflow-x-auto"],
+main [class*="overflow-auto"],
+main [class*="overflow-scroll"] {
+  overflow-x: hidden !important;
 }
 
 main .grid {
@@ -303,6 +317,7 @@ main .grid.grid-cols-4 :is(.text-4xl, .text-5xl, .text-6xl) {
 
 main table {
   width: 100%;
+  max-width: 100%;
   table-layout: auto;
 }
 
@@ -310,6 +325,7 @@ main th,
 main td {
   vertical-align: middle;
   word-break: normal;
+  max-width: 16rem;
 }
 
 main td :is(h1, h2, h3, p, span, div) {
@@ -317,7 +333,7 @@ main td :is(h1, h2, h3, p, span, div) {
 }
 
 main td:first-child {
-  min-width: 12rem;
+  min-width: 10rem;
   max-width: 20rem;
 }
 
@@ -351,6 +367,18 @@ main td:first-child img {
 
   main .grid.grid-cols-4 > * {
     min-height: auto;
+  }
+}
+
+@media (max-width: 1280px) {
+  main th,
+  main td {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  main table {
+    font-size: 0.9rem;
   }
 }
 
