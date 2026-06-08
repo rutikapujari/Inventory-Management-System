@@ -745,6 +745,13 @@ body:not(.manager-page) [data-manager-menu-button] {
   display: none !important;
 }
 
+body.unauthorized-page [data-manager-menu-button],
+body.auth-page [data-manager-menu-button] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 body.manager-page [data-manager-menu-button] span {
   display: block;
   width: 1.25rem;

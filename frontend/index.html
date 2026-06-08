@@ -24,7 +24,9 @@
           document.body.classList.toggle("manager-page", isManagerPage);
 
           if (!isManagerPage) {
-            button?.remove();
+            document.querySelectorAll("[data-manager-menu-button]").forEach((menuButton) => {
+              menuButton.remove();
+            });
             document.body.classList.remove("manager-sidebar-open");
             return;
           }
