@@ -19,6 +19,8 @@
 
           document.body.classList.toggle("auth-page", isAuthPage);
 
+          document.body.classList.toggle("manager-page", isManagerPage);
+
           if (!isManagerPage) {
             button?.remove();
             document.body.classList.remove("manager-sidebar-open");

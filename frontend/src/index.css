@@ -722,7 +722,7 @@ main div:has(input):has(button) > a {
   white-space: nowrap !important;
 }
 
-[data-manager-menu-button] {
+body.manager-page [data-manager-menu-button] {
   position: fixed;
   top: 1rem;
   left: 18rem;
@@ -741,7 +741,11 @@ main div:has(input):has(button) > a {
   cursor: pointer;
 }
 
-[data-manager-menu-button] span {
+body:not(.manager-page) [data-manager-menu-button] {
+  display: none !important;
+}
+
+body.manager-page [data-manager-menu-button] span {
   display: block;
   width: 1.25rem;
   height: 0.14rem;
@@ -749,7 +753,7 @@ main div:has(input):has(button) > a {
   background: #fff;
 }
 
-body.manager-sidebar-open [data-manager-menu-button] {
+body.manager-page.manager-sidebar-open [data-manager-menu-button] {
   left: 17.25rem;
 }
 
@@ -891,9 +895,9 @@ body.auth-page form div:has(input):has(> button) > button :is(svg, i) {
     left: 1rem;
   }
 
-  body:has([data-manager-menu-button]) aside,
-  body:has([data-manager-menu-button]) nav[class*="sidebar"],
-  body:has([data-manager-menu-button]) [class*="Sidebar"] {
+  body.manager-page:has([data-manager-menu-button]) aside,
+  body.manager-page:has([data-manager-menu-button]) nav[class*="sidebar"],
+  body.manager-page:has([data-manager-menu-button]) [class*="Sidebar"] {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
@@ -905,13 +909,13 @@ body.auth-page form div:has(input):has(> button) > button :is(svg, i) {
     transition: transform 180ms ease !important;
   }
 
-  body.manager-sidebar-open aside,
-  body.manager-sidebar-open nav[class*="sidebar"],
-  body.manager-sidebar-open [class*="Sidebar"] {
+  body.manager-page.manager-sidebar-open aside,
+  body.manager-page.manager-sidebar-open nav[class*="sidebar"],
+  body.manager-page.manager-sidebar-open [class*="Sidebar"] {
     transform: translateX(0) !important;
   }
 
-  body.manager-sidebar-open::before {
+  body.manager-page.manager-sidebar-open::before {
     content: "";
     position: fixed;
     inset: 0;
@@ -919,7 +923,7 @@ body.auth-page form div:has(input):has(> button) > button :is(svg, i) {
     background: rgba(15, 23, 42, 0.42);
   }
 
-  body:has([data-manager-menu-button]) main {
+  body.manager-page:has([data-manager-menu-button]) main {
     padding-top: 4rem !important;
   }
 }
