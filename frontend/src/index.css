@@ -841,6 +841,41 @@ body.auth-page form div:has(input) > button svg {
   margin: auto;
 }
 
+body.auth-page form div:has(input):has(> button) {
+  position: relative !important;
+}
+
+body.auth-page form div:has(input):has(> button) > input {
+  padding-right: 3.25rem !important;
+}
+
+body.auth-page form div:has(input):has(> button) > button {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 3rem !important;
+  min-width: 3rem !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #64748b !important;
+  box-shadow: none !important;
+}
+
+body.auth-page form div:has(input):has(> button) > button:hover {
+  color: #7c3aed !important;
+}
+
+body.auth-page form div:has(input):has(> button) > button :is(svg, i) {
+  width: 1.15rem !important;
+  height: 1.15rem !important;
+}
+
 @media (max-width: 520px) {
   body.auth-page #root > div {
     padding: 1rem !important;
