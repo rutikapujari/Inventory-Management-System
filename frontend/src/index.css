@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "tailwindcss";
+
 /* Manager product tables: keep status badges and actions aligned on deployed viewports. */
 .manager-products-table {
   table-layout: fixed;
