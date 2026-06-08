@@ -182,17 +182,19 @@ main .grid.grid-cols-4 > * > :first-child :is(.text-4xl, .text-5xl, .text-6xl) {
 
 /* Manager supplier cards: compact the large green supplier tiles. */
 main .grid[class*="grid-cols-1"][class*="lg:grid-cols-2"] {
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 32rem)) !important;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 21rem)) !important;
   align-items: start;
 }
 
 main .grid[class*="grid-cols-1"][class*="lg:grid-cols-2"] > div:has([class*="from-green"]) {
-  max-width: 32rem;
+  width: 21rem;
+  max-width: 21rem;
+  min-height: 24.75rem;
   overflow: hidden;
 }
 
 main [class*="from-green"][class*="to-"] {
-  min-height: 7rem !important;
+  min-height: 8.75rem !important;
   padding: 1.25rem 1.5rem !important;
 }
 
@@ -207,16 +209,21 @@ main [class*="from-green"][class*="to-"] :is(h2, h3, .text-2xl, .text-3xl) {
 }
 
 main [class*="from-green"][class*="to-"] + div {
-  padding: 1.25rem 1.5rem !important;
+  padding: 1rem 1.5rem 1.25rem !important;
 }
 
 main [class*="from-green"][class*="to-"] + div > * + * {
-  margin-top: 0.75rem !important;
+  margin-top: 0.65rem !important;
+}
+
+main [class*="from-green"][class*="to-"] + div :is(p, span, div) {
+  font-size: 0.95rem;
+  line-height: 1.35;
 }
 
 main [class*="from-green"][class*="to-"] + div button,
 main [class*="from-green"][class*="to-"] + div a {
-  min-height: 2.5rem;
+  min-height: 2.35rem;
   padding-top: 0.5rem !important;
   padding-bottom: 0.5rem !important;
 }
