@@ -8,6 +8,40 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      (() => {
+        const syncManagerMenu = () => {
+          const isManagerPage = window.location.pathname.startsWith("/manager");
+          let button = document.querySelector("[data-manager-menu-button]");
+
+          if (!isManagerPage) {
+            button?.remove();
+            document.body.classList.remove("manager-sidebar-open");
+            return;
+          }
+
+          if (!button) {
+            button = document.createElement("button");
+            button.type = "button";
+            button.setAttribute("data-manager-menu-button", "true");
+            button.setAttribute("aria-label", "Open manager menu");
+            button.innerHTML = "<span></span><span></span><span></span>";
+            button.addEventListener("click", () => {
+              document.body.classList.toggle("manager-sidebar-open");
+            });
+            document.body.appendChild(button);
+          }
+        };
+
+        syncManagerMenu();
+        window.addEventListener("popstate", syncManagerMenu);
+        const pushState = history.pushState;
+        history.pushState = function (...args) {
+          pushState.apply(this, args);
+          setTimeout(syncManagerMenu, 0);
+        };
+      })();
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
