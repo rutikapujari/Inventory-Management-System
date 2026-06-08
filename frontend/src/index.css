@@ -964,6 +964,39 @@ body.unauthorized-page #root > div > div :is(button, a) {
   }
 }
 
+/* Strong auth page override: keep the login form compact, never full width. */
+body.auth-page #root > div {
+  display: grid !important;
+  min-height: 100vh !important;
+  place-items: center !important;
+  padding: 1.5rem !important;
+}
+
+body.auth-page #root :is(div, section, article):has(> form),
+body.auth-page #root form {
+  width: min(100%, 26rem) !important;
+  max-width: 26rem !important;
+}
+
+body.auth-page #root :is(div, section, article):has(> form) {
+  min-height: auto !important;
+  padding: 2rem !important;
+  border-radius: 1.25rem !important;
+}
+
+body.auth-page #root form {
+  margin: 0 auto !important;
+}
+
+body.auth-page #root form input {
+  width: 100% !important;
+}
+
+body.auth-page #root form button[type="submit"],
+body.auth-page #root form > button {
+  width: 100% !important;
+}
+
 @media (max-width: 1100px) {
   [data-manager-menu-button] {
     left: 1rem;
