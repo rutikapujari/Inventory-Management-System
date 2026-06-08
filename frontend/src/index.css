@@ -880,6 +880,73 @@ body.auth-page form div:has(input):has(> button) > button :is(svg, i) {
   height: 1.15rem !important;
 }
 
+/* Admin unauthorized page: compact centered permission card. */
+body.unauthorized-page {
+  overflow-x: hidden !important;
+}
+
+body.unauthorized-page #root {
+  min-height: 100vh;
+}
+
+body.unauthorized-page #root > div {
+  min-height: 100vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1.5rem !important;
+}
+
+body.unauthorized-page #root > div > div {
+  width: min(100%, 42rem) !important;
+  max-width: 42rem !important;
+  min-height: auto !important;
+  padding: 2rem !important;
+  border-radius: 1rem !important;
+}
+
+body.unauthorized-page #root > div > div :is(h1, h2, h3) {
+  font-size: 1.35rem !important;
+  line-height: 1.25 !important;
+}
+
+body.unauthorized-page #root > div > div p {
+  max-width: 34rem;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 0.9rem !important;
+  line-height: 1.45 !important;
+}
+
+body.unauthorized-page #root > div > div > div:last-child,
+body.unauthorized-page #root > div > div div:has(> button),
+body.unauthorized-page #root > div > div div:has(> a) {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.85rem !important;
+  width: 100% !important;
+  margin-top: 1.5rem !important;
+}
+
+body.unauthorized-page #root > div > div :is(button, a) {
+  width: 100% !important;
+  min-height: 2.75rem !important;
+  border-radius: 0.75rem !important;
+  font-size: 0.9rem !important;
+}
+
+@media (max-width: 640px) {
+  body.unauthorized-page #root > div > div {
+    padding: 1.25rem !important;
+  }
+
+  body.unauthorized-page #root > div > div > div:last-child,
+  body.unauthorized-page #root > div > div div:has(> button),
+  body.unauthorized-page #root > div > div div:has(> a) {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 @media (max-width: 520px) {
   body.auth-page #root > div {
     padding: 1rem !important;

@@ -15,9 +15,11 @@
           const isAuthPage = ["/login", "/register", "/forgot-password"].some((path) =>
             window.location.pathname.startsWith(path)
           );
+          const isUnauthorizedPage = window.location.pathname.startsWith("/admin/unauthorized");
           let button = document.querySelector("[data-manager-menu-button]");
 
           document.body.classList.toggle("auth-page", isAuthPage);
+          document.body.classList.toggle("unauthorized-page", isUnauthorizedPage);
 
           document.body.classList.toggle("manager-page", isManagerPage);
 
