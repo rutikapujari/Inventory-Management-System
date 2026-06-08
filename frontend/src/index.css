@@ -795,6 +795,8 @@ body.auth-page input {
   width: 100% !important;
   min-height: 3rem !important;
   font-size: 0.95rem !important;
+  border: 0 !important;
+  outline: 0 !important;
 }
 
 body.auth-page button {
@@ -805,6 +807,38 @@ body.auth-page button {
 body.auth-page :is(h1, h2) {
   font-size: 1.75rem !important;
   line-height: 1.2 !important;
+}
+
+body.auth-page form div:has(> input),
+body.auth-page form div:has(input):not(:has(label)) {
+  display: flex !important;
+  align-items: center !important;
+  overflow: hidden !important;
+  border-radius: 0.75rem !important;
+}
+
+body.auth-page form div:has(input) > svg,
+body.auth-page form div:has(input) > span:first-child {
+  flex: 0 0 3rem !important;
+}
+
+body.auth-page form div:has(input) > input {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+body.auth-page form div:has(input) > button {
+  flex: 0 0 3.25rem !important;
+  width: 3.25rem !important;
+  min-width: 3.25rem !important;
+  min-height: 3rem !important;
+  border: 0 !important;
+  border-left: 0 !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+}
+
+body.auth-page form div:has(input) > button svg {
+  margin: auto;
 }
 
 @media (max-width: 520px) {
