@@ -12,7 +12,12 @@
       (() => {
         const syncManagerMenu = () => {
           const isManagerPage = window.location.pathname.startsWith("/manager");
+          const isAuthPage = ["/login", "/register", "/forgot-password"].some((path) =>
+            window.location.pathname.startsWith(path)
+          );
           let button = document.querySelector("[data-manager-menu-button]");
+
+          document.body.classList.toggle("auth-page", isAuthPage);
 
           if (!isManagerPage) {
             button?.remove();

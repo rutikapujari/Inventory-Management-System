@@ -751,6 +751,70 @@ body.manager-sidebar-open [data-manager-menu-button] {
   left: 17.25rem;
 }
 
+/* Auth pages: keep login/register forms in a compact centered card. */
+body.auth-page {
+  overflow-x: hidden !important;
+}
+
+body.auth-page #root {
+  min-height: 100vh;
+}
+
+body.auth-page #root > div {
+  min-height: 100vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1.5rem !important;
+}
+
+body.auth-page #root > div > div,
+body.auth-page #root form {
+  width: min(100%, 28rem) !important;
+  max-width: 28rem !important;
+}
+
+body.auth-page #root > div > div {
+  min-height: auto !important;
+  padding: 2rem !important;
+  border-radius: 1.25rem !important;
+}
+
+body.auth-page form {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+body.auth-page form > * + * {
+  margin-top: 1rem !important;
+}
+
+body.auth-page input {
+  width: 100% !important;
+  min-height: 3rem !important;
+  font-size: 0.95rem !important;
+}
+
+body.auth-page button {
+  width: 100% !important;
+  min-height: 3rem !important;
+}
+
+body.auth-page :is(h1, h2) {
+  font-size: 1.75rem !important;
+  line-height: 1.2 !important;
+}
+
+@media (max-width: 520px) {
+  body.auth-page #root > div {
+    padding: 1rem !important;
+  }
+
+  body.auth-page #root > div > div {
+    padding: 1.25rem !important;
+  }
+}
+
 @media (max-width: 1100px) {
   [data-manager-menu-button] {
     left: 1rem;
