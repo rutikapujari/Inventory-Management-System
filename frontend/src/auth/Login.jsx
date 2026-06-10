@@ -103,8 +103,11 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 px-4">
-      <div className="w-full max-w-sm bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl shadow-2xl p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 px-4 py-8">
+      <div
+        className="w-full max-w-[420px] bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl shadow-2xl p-6"
+        style={{ width: "min(100%, 420px)" }}
+      >
         <div className="flex justify-center mb-4">
           <div className="h-16 w-16 rounded-full bg-white flex items-center justify-center shadow-lg">
             <FaLock className="text-purple-600" size={30} />
