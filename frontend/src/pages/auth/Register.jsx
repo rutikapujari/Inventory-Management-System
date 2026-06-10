@@ -51,8 +51,11 @@ function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-600 px-4">
-      <div className="w-full max-w-sm bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl shadow-2xl p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-600 px-4 py-8">
+      <div
+        className="w-full max-w-[520px] bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl shadow-2xl p-6"
+        style={{ width: "min(100%, 520px)" }}
+      >
         <div className="flex justify-center mb-4">
           <div className="h-16 w-16 rounded-full bg-white flex items-center justify-center shadow-lg">
             <FaUser className="text-pink-600" size={30} />
