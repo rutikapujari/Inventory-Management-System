@@ -57,22 +57,22 @@ export default function AdminRegister() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-5xl overflow-hidden rounded-[32px] bg-white shadow-2xl sm:grid sm:grid-cols-[1.1fr_0.9fr]">
-        <div className="hidden bg-gradient-to-br from-cyan-500 to-blue-600 p-10 text-white sm:block">
+    <div className="min-h-screen bg-slate-100 flex items-center justify-center px-4 py-8">
+      <div className="w-full max-w-3xl overflow-hidden rounded-3xl bg-white shadow-2xl sm:grid sm:grid-cols-[0.85fr_1fr]">
+        <div className="hidden bg-gradient-to-br from-cyan-500 to-blue-600 p-8 text-white sm:block">
           <div className="relative h-full">
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.35),_transparent_35%)]" />
             <div className="relative z-10 flex h-full flex-col justify-between">
               <div>
-                <div className="inline-flex h-16 w-16 items-center justify-center rounded-3xl bg-white/20 shadow-lg">
-                  <FaUserShield size={28} />
+                <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 shadow-lg">
+                  <FaUserShield size={24} />
                 </div>
-                <h2 className="mt-10 text-4xl font-semibold">Admin Register</h2>
-                <p className="mt-4 max-w-sm text-base leading-7 text-white/85">
+                <h2 className="mt-8 text-3xl font-semibold">Admin Register</h2>
+                <p className="mt-3 max-w-xs text-sm leading-6 text-white/85">
                   Create a secure administrator account for system access, management, and reporting.
                 </p>
               </div>
-              <div className="space-y-4 rounded-3xl border border-white/20 bg-white/10 p-6 backdrop-blur-xl">
+              <div className="space-y-3 rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur-xl">
                 <p className="text-xs uppercase tracking-[0.3em] text-white/70">Secure setup</p>
                 <p className="text-sm text-white/90">A polished admin experience built for your team.</p>
               </div>
@@ -80,10 +80,10 @@ export default function AdminRegister() {
           </div>
         </div>
 
-        <div className="px-8 py-10 sm:px-12">
-          <div className="mb-8">
+        <div className="px-6 py-8 sm:px-9">
+          <div className="mb-7">
             <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Create account</p>
-            <h1 className="mt-3 text-3xl font-semibold text-slate-900">Register new admin</h1>
+            <h1 className="mt-3 text-2xl font-semibold text-slate-900">Register new admin</h1>
             <p className="mt-2 text-sm text-slate-500">Enter credentials to create a secure admin profile.</p>
           </div>
 
