@@ -1171,3 +1171,65 @@ body.auth-page #root .admin-auth-card form button[type="submit"],
     padding: 2rem 1.25rem !important;
   }
 }
+
+/* Production-stable unauthorized page sizing. */
+#root .unauthorized-page {
+  width: 100% !important;
+  min-height: 100vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1.5rem 1.125rem !important;
+  background: #f8fafc !important;
+}
+
+#root .unauthorized-card {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 19.25rem !important;
+  padding: 2.25rem !important;
+  border-radius: 1rem !important;
+}
+
+#root .unauthorized-card h1 {
+  font-size: 1.55rem !important;
+  line-height: 1.25 !important;
+}
+
+#root .unauthorized-card p {
+  max-width: 50rem !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  font-size: 0.95rem !important;
+  line-height: 1.5 !important;
+}
+
+#root .unauthorized-actions {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.875rem !important;
+  width: 100% !important;
+  margin-top: 1.75rem !important;
+}
+
+#root .unauthorized-actions button {
+  width: 100% !important;
+  min-height: 3.2rem !important;
+  border-radius: 0.875rem !important;
+  font-size: 0.9rem !important;
+}
+
+@media (max-width: 640px) {
+  #root .unauthorized-page {
+    padding: 1rem !important;
+  }
+
+  #root .unauthorized-card {
+    min-height: auto !important;
+    padding: 1.5rem !important;
+  }
+
+  #root .unauthorized-actions {
+    grid-template-columns: 1fr !important;
+  }
+}

@@ -31,8 +31,8 @@ export default function Unauthorized() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
-      <div className="w-full max-w-md rounded-3xl border border-red-100 bg-white p-8 text-center shadow-xl">
+    <div className="unauthorized-page flex min-h-screen items-center justify-center bg-slate-50 px-4">
+      <div className="unauthorized-card w-full rounded-3xl border border-red-100 bg-white p-8 text-center shadow-xl">
         <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-red-50 text-2xl font-bold text-red-600">
           !
         </div>
@@ -43,7 +43,7 @@ export default function Unauthorized() {
           Your current login does not have admin permission. Sign in with an
           admin account to open the admin dashboard.
         </p>
-        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        <div className="unauthorized-actions mt-6 grid gap-3 sm:grid-cols-2">
           <button
             type="button"
             onClick={handleAdminLogin}
