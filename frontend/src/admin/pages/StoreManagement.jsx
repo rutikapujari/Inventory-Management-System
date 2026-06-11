@@ -59,7 +59,7 @@ export default function StoreManagement() {
   };
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="!block space-y-6 p-6">
       <div>
         <h1 className="text-3xl font-bold text-slate-900">Store Management</h1>
         <p className="text-sm text-slate-600 mt-1">Manage store identity, contact details, and operating defaults.</p>
@@ -68,15 +68,15 @@ export default function StoreManagement() {
       {message ? <div className="rounded-2xl bg-emerald-50 border border-emerald-200 p-4 text-emerald-700">{message}</div> : null}
       {error ? <div className="rounded-2xl bg-red-50 border border-red-200 p-4 text-red-700">{error}</div> : null}
 
-      <div className="rounded-3xl bg-white border border-slate-100 p-8 shadow-sm space-y-6">
-        <div className="flex items-center gap-3">
+      <div className="!block space-y-6 rounded-3xl border border-slate-100 bg-white p-8 shadow-sm">
+        <div className="!flex !items-center gap-3">
           <div className="rounded-2xl bg-blue-50 p-3 text-blue-600">
             <Building2 size={24} />
           </div>
           <h2 className="text-xl font-bold text-slate-900">Store Profile</h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="!grid grid-cols-1 gap-5 md:grid-cols-2">
           <label>
             <span className="block text-sm font-bold text-slate-900 mb-2">Store Name</span>
             <input value={store.storeName || ""} onChange={(event) => handleChange("storeName", event.target.value)} className="w-full rounded-2xl border border-slate-200 px-4 py-3" />
@@ -111,7 +111,7 @@ export default function StoreManagement() {
           </label>
         </div>
 
-        <button type="button" onClick={handleSave} disabled={saving} className="rounded-2xl bg-blue-600 px-6 py-3 font-bold text-white disabled:opacity-60 inline-flex items-center gap-2">
+        <button type="button" onClick={handleSave} disabled={saving} className="!inline-flex !items-center !justify-center gap-2 rounded-2xl bg-blue-600 px-6 py-3 font-bold text-white disabled:opacity-60">
           <Save size={18} /> {saving ? "Saving..." : "Save Store"}
         </button>
       </div>

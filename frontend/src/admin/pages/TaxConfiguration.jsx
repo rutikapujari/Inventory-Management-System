@@ -61,7 +61,7 @@ export default function TaxConfiguration() {
   };
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="!block space-y-6 p-6">
       <div>
         <h1 className="text-3xl font-bold text-slate-900">Tax Configuration</h1>
         <p className="text-sm text-slate-600 mt-1">Set the tax name, rate, and registration number used by billing.</p>
@@ -70,8 +70,8 @@ export default function TaxConfiguration() {
       {message ? <div className="rounded-2xl bg-emerald-50 border border-emerald-200 p-4 text-emerald-700">{message}</div> : null}
       {error ? <div className="rounded-2xl bg-red-50 border border-red-200 p-4 text-red-700">{error}</div> : null}
 
-      <div className="rounded-3xl bg-white border border-slate-100 p-8 shadow-sm space-y-6">
-        <div className="flex items-center gap-3">
+      <div className="!block space-y-6 rounded-3xl border border-slate-100 bg-white p-8 shadow-sm">
+        <div className="!flex !items-center gap-3">
           <div className="rounded-2xl bg-indigo-50 p-3 text-indigo-600">
             <Percent size={24} />
           </div>
@@ -81,7 +81,7 @@ export default function TaxConfiguration() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="!grid grid-cols-1 gap-5 md:grid-cols-3">
           <label>
             <span className="block text-sm font-bold text-slate-900 mb-2">Tax Name</span>
             <input
@@ -116,7 +116,7 @@ export default function TaxConfiguration() {
           type="button"
           onClick={handleSave}
           disabled={saving}
-          className="rounded-2xl bg-indigo-600 px-6 py-3 font-bold text-white disabled:opacity-60 inline-flex items-center gap-2"
+          className="!inline-flex !items-center !justify-center gap-2 rounded-2xl bg-indigo-600 px-6 py-3 font-bold text-white disabled:opacity-60"
         >
           <Save size={18} /> {saving ? "Saving..." : "Save Tax"}
         </button>

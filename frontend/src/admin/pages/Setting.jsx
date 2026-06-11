@@ -105,7 +105,7 @@ export default function Setting() {
   ];
 
   return (
-    <div className="space-y-6 p-6 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen">
+    <div className="!block min-h-screen space-y-6 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
       <div>
         <h1 className="text-3xl font-bold text-slate-900">Settings</h1>
         <p className="text-slate-600 text-sm mt-1">
@@ -113,14 +113,14 @@ export default function Setting() {
         </p>
       </div>
 
-      <div className="flex gap-2 bg-white rounded-2xl p-2 shadow-sm border border-slate-100 w-fit">
+      <div className="!flex !w-fit flex-wrap gap-2 rounded-2xl border border-slate-100 bg-white p-2 shadow-sm">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           return (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 rounded-xl font-medium text-sm flex items-center gap-2 transition-all ${
+              className={`!flex !items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
                 activeTab === tab.id
                   ? "bg-gradient-to-r from-indigo-600 to-blue-600 text-white"
                   : "text-slate-600 hover:text-slate-900"
@@ -144,12 +144,12 @@ export default function Setting() {
       )}
 
       {activeTab === "general" && (
-        <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100 space-y-6">
+        <div className="!block space-y-6 rounded-3xl border border-slate-100 bg-white p-8 shadow-lg">
           <label className="block">
             <span className="block text-sm font-bold text-slate-900 mb-2">Store Name</span>
             <input value={settings.storeName} onChange={(e) => handleChange("storeName", e.target.value)} className="w-full border border-slate-200 rounded-2xl px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
           </label>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="!grid grid-cols-1 gap-6 md:grid-cols-2">
             <label>
               <span className="block text-sm font-bold text-slate-900 mb-2">Email</span>
               <input type="email" value={settings.email} onChange={(e) => handleChange("email", e.target.value)} className="w-full border border-slate-200 rounded-2xl px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
@@ -181,12 +181,12 @@ export default function Setting() {
       )}
 
       {activeTab === "notifications" && (
-        <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100 space-y-4">
-          <label className="flex items-center gap-3 cursor-pointer">
+        <div className="!block space-y-4 rounded-3xl border border-slate-100 bg-white p-8 shadow-lg">
+          <label className="!flex cursor-pointer items-center gap-3">
             <input type="checkbox" checked={settings.emailNotifications} onChange={(e) => handleChange("emailNotifications", e.target.checked)} className="w-5 h-5 rounded accent-indigo-600" />
             <span className="font-bold text-slate-900">Email Notifications</span>
           </label>
-          <label className="flex items-center gap-3 cursor-pointer">
+          <label className="!flex cursor-pointer items-center gap-3">
             <input type="checkbox" checked={settings.smsNotifications} onChange={(e) => handleChange("smsNotifications", e.target.checked)} className="w-5 h-5 rounded accent-indigo-600" />
             <span className="font-bold text-slate-900">SMS Notifications</span>
           </label>
@@ -194,20 +194,20 @@ export default function Setting() {
       )}
 
       {activeTab === "security" && (
-        <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100 space-y-6">
+        <div className="!block space-y-6 rounded-3xl border border-slate-100 bg-white p-8 shadow-lg">
           <label>
             <span className="block text-sm font-bold text-slate-900 mb-2">Session Timeout (minutes)</span>
             <input type="number" value={settings.sessionTimeout} onChange={(e) => handleChange("sessionTimeout", e.target.value)} className="w-full border border-slate-200 rounded-2xl px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
           </label>
-          <button onClick={handlePasswordChange} className="bg-gradient-to-r from-amber-600 to-orange-600 text-white px-6 py-3 rounded-2xl font-bold shadow-lg flex items-center gap-2">
+          <button onClick={handlePasswordChange} className="!flex !items-center !justify-center gap-2 rounded-2xl bg-gradient-to-r from-amber-600 to-orange-600 px-6 py-3 font-bold text-white shadow-lg">
             <Lock size={18} /> Change Password
           </button>
         </div>
       )}
 
       {activeTab === "backup" && (
-        <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100 space-y-6">
-          <label className="flex items-center gap-3 cursor-pointer">
+        <div className="!block space-y-6 rounded-3xl border border-slate-100 bg-white p-8 shadow-lg">
+          <label className="!flex cursor-pointer items-center gap-3">
             <input type="checkbox" checked={settings.autoBackup} onChange={(e) => handleChange("autoBackup", e.target.checked)} className="w-5 h-5 rounded accent-indigo-600" />
             <span className="font-bold text-slate-900">Enable automatic backups</span>
           </label>
@@ -217,17 +217,17 @@ export default function Setting() {
             <option value="weekly">Weekly</option>
             <option value="monthly">Monthly</option>
           </select>
-          <button onClick={handleBackup} className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-3 rounded-2xl font-bold shadow-lg flex items-center gap-2">
+          <button onClick={handleBackup} className="!flex !items-center !justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-3 font-bold text-white shadow-lg">
             <Database size={18} /> Create Backup Now
           </button>
         </div>
       )}
 
-      <div className="flex justify-between">
-        <button onClick={handleLogout} className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-2xl font-bold shadow-lg flex items-center gap-2">
+      <div className="!flex !w-full !flex-col !items-stretch !justify-between gap-3 sm:!flex-row sm:!items-center">
+        <button onClick={handleLogout} className="!flex !items-center !justify-center gap-2 rounded-2xl bg-gradient-to-r from-red-600 to-red-700 px-6 py-3 font-bold text-white shadow-lg">
           <LogOut size={18} /> Logout
         </button>
-        <button onClick={handleSave} disabled={saving} className="bg-gradient-to-r from-indigo-600 to-blue-600 disabled:from-slate-300 disabled:to-slate-300 text-white px-6 py-3 rounded-2xl font-bold shadow-lg flex items-center gap-2">
+        <button onClick={handleSave} disabled={saving} className="!flex !items-center !justify-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-600 px-6 py-3 font-bold text-white shadow-lg disabled:from-slate-300 disabled:to-slate-300">
           <Save size={18} /> {saving ? "Saving..." : "Save Changes"}
         </button>
       </div>

@@ -79,7 +79,7 @@ export default function ApiControl() {
   };
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="!block space-y-6 p-6">
       <div>
         <h1 className="text-3xl font-bold text-slate-900">API Control</h1>
         <p className="text-sm text-slate-600 mt-1">Control which roles can create, update, and delete module data.</p>
@@ -88,8 +88,8 @@ export default function ApiControl() {
       {message ? <div className="rounded-2xl bg-emerald-50 border border-emerald-200 p-4 text-emerald-700">{message}</div> : null}
       {error ? <div className="rounded-2xl bg-red-50 border border-red-200 p-4 text-red-700">{error}</div> : null}
 
-      <div className="rounded-3xl bg-white border border-slate-100 p-6 shadow-sm">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto_auto_auto_auto] gap-3 items-end">
+      <div className="!block rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+        <div className="!grid grid-cols-1 items-end gap-3 md:grid-cols-[1fr_1fr_auto_auto_auto_auto]">
           <label>
             <span className="block text-sm font-bold text-slate-900 mb-2">Role</span>
             <select value={form.role} onChange={(event) => handleForm("role", event.target.value)} className="w-full rounded-2xl border border-slate-200 px-4 py-3">
@@ -103,18 +103,18 @@ export default function ApiControl() {
             <input value={form.module} onChange={(event) => handleForm("module", event.target.value)} className="w-full rounded-2xl border border-slate-200 px-4 py-3" />
           </label>
           {["canCreate", "canUpdate", "canDelete"].map((key) => (
-            <label key={key} className="flex items-center gap-2 rounded-2xl border border-slate-200 px-4 py-3">
+            <label key={key} className="!flex !items-center gap-2 rounded-2xl border border-slate-200 px-4 py-3">
               <input type="checkbox" checked={form[key]} onChange={(event) => handleForm(key, event.target.checked)} className="h-5 w-5 accent-indigo-600" />
               <span className="text-sm font-semibold text-slate-700">{key.replace("can", "")}</span>
             </label>
           ))}
-          <button type="button" onClick={addRule} className="rounded-2xl bg-indigo-600 px-5 py-3 font-bold text-white inline-flex items-center gap-2">
+          <button type="button" onClick={addRule} className="!inline-flex !items-center !justify-center gap-2 rounded-2xl bg-indigo-600 px-5 py-3 font-bold text-white">
             <Plus size={18} /> Add
           </button>
         </div>
       </div>
 
-      <div className="rounded-3xl bg-white border border-slate-100 shadow-sm overflow-hidden">
+      <div className="!block overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm">
         <table className="w-full text-left text-sm">
           <thead className="bg-slate-100">
             <tr>
