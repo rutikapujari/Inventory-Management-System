@@ -51,9 +51,9 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center px-4 py-10">
-      <div className="w-full max-w-5xl overflow-hidden rounded-[32px] bg-white shadow-2xl sm:grid sm:grid-cols-[1.1fr_0.9fr]">
-        <div className="hidden bg-gradient-to-br from-cyan-500 to-blue-600 p-10 text-white sm:block">
+    <div className="admin-auth-page min-h-screen bg-slate-100 flex items-center justify-center px-4 py-10">
+      <div className="admin-auth-card w-full max-w-5xl overflow-hidden rounded-[32px] bg-white shadow-2xl sm:grid sm:grid-cols-[1.1fr_0.9fr]">
+        <div className="admin-auth-visual hidden bg-gradient-to-br from-cyan-500 to-blue-600 p-10 text-white sm:block">
           <div className="relative h-full">
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.35),_transparent_35%)]" />
             <div className="relative z-10 flex h-full flex-col justify-between">
@@ -74,7 +74,7 @@ export default function Login() {
           </div>
         </div>
 
-        <div className="px-8 py-10 sm:px-12">
+        <div className="admin-auth-form-panel px-8 py-10 sm:px-12">
           <div className="mb-8">
             <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Welcome back</p>
             <h1 className="mt-3 text-3xl font-semibold text-slate-900">Sign in to admin</h1>

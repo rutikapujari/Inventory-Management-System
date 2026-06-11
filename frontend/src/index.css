@@ -1090,3 +1090,84 @@ main .grid.grid-cols-4 :is(h1, h2, h3, p, span),
     grid-template-columns: 1fr !important;
   }
 }
+
+/* Admin login/register keep the split card size consistent in production. */
+body.auth-page #root .admin-auth-page,
+#root .admin-auth-page {
+  width: 100% !important;
+  min-height: 100vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 2.5rem 1rem !important;
+}
+
+body.auth-page #root .admin-auth-card,
+#root .admin-auth-card {
+  width: min(100%, 80rem) !important;
+  max-width: 80rem !important;
+  min-height: 38.75rem !important;
+  padding: 0 !important;
+  border-radius: 2rem !important;
+  overflow: hidden !important;
+}
+
+body.auth-page #root .admin-auth-card {
+  display: grid !important;
+  grid-template-columns: 1.1fr 0.9fr !important;
+}
+
+body.auth-page #root .admin-auth-card > .admin-auth-visual,
+#root .admin-auth-card > .admin-auth-visual {
+  display: block !important;
+  padding: 3.125rem !important;
+}
+
+body.auth-page #root .admin-auth-card > .admin-auth-form-panel,
+#root .admin-auth-card > .admin-auth-form-panel {
+  width: auto !important;
+  max-width: none !important;
+  padding: 3.25rem 3rem !important;
+}
+
+body.auth-page #root .admin-auth-card form,
+#root .admin-auth-card form {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+body.auth-page #root .admin-auth-card form div:has(input),
+#root .admin-auth-card form div:has(input) {
+  border-radius: 1.5rem !important;
+}
+
+body.auth-page #root .admin-auth-card form button[type="submit"],
+#root .admin-auth-card form button[type="submit"] {
+  border-radius: 1.5rem !important;
+  min-height: 3.45rem !important;
+}
+
+@media (max-width: 640px) {
+  body.auth-page #root .admin-auth-page,
+  #root .admin-auth-page {
+    padding: 1rem !important;
+  }
+
+  body.auth-page #root .admin-auth-card,
+  #root .admin-auth-card {
+    display: block !important;
+    width: 100% !important;
+    min-height: auto !important;
+    border-radius: 1.25rem !important;
+  }
+
+  body.auth-page #root .admin-auth-card > .admin-auth-visual,
+  #root .admin-auth-card > .admin-auth-visual {
+    display: none !important;
+  }
+
+  body.auth-page #root .admin-auth-card > .admin-auth-form-panel,
+  #root .admin-auth-card > .admin-auth-form-panel {
+    padding: 2rem 1.25rem !important;
+  }
+}
