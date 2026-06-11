@@ -41,16 +41,16 @@ export default function Inventory() {
   ];
 
   return (
-    <div className="space-y-8 p-6 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen">
+    <div className="!block min-h-screen space-y-8 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div className="!flex !w-full !flex-col !items-start !justify-between gap-4 md:!flex-row md:!items-center">
         <div>
           <h1 className="text-3xl font-bold text-slate-900">Inventory Management</h1>
           <p className="text-slate-600 text-sm mt-1">Track, manage, and update your product inventory</p>
         </div>
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white px-6 py-3 rounded-2xl text-sm font-bold flex items-center gap-2 shadow-lg hover:shadow-xl transition-all w-fit"
+          className="!flex !w-fit !items-center !justify-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-600 px-6 py-3 text-sm font-bold text-white shadow-lg transition-all hover:from-indigo-700 hover:to-blue-700 hover:shadow-xl"
         >
           <Plus size={18} />
           Add Product
@@ -79,7 +79,7 @@ export default function Inventory() {
       </div>
 
       {/* Search & Filter */}
-      <div className="flex flex-col md:flex-row gap-4 items-center">
+      <div className="!flex !w-full !flex-col !items-stretch gap-4 md:!flex-row md:!items-center">
         <div className="relative flex-1">
           <Search className="absolute left-4 top-4 text-slate-400" size={18} />
           <input
@@ -90,7 +90,7 @@ export default function Inventory() {
             className="w-full bg-white border border-slate-200 rounded-2xl pl-12 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
           />
         </div>
-        <div className="flex gap-2">
+        <div className="!flex gap-2">
           <button className="px-5 py-3 bg-white border border-slate-200 rounded-2xl text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm">
             Filter
           </button>
@@ -101,7 +101,7 @@ export default function Inventory() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-3xl shadow-lg border border-slate-100 overflow-hidden">
+      <div className="!block overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-lg">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead className="bg-gradient-to-r from-slate-50 to-blue-50 border-b border-slate-200">

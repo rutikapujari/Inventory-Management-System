@@ -68,25 +68,25 @@ export default function AddProductModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 z-50 !flex !items-center !justify-center bg-black/60 p-4">
 
-      <div className="bg-white w-full max-w-xl rounded-2xl shadow-xl overflow-hidden border">
+      <div className="!block w-full max-w-xl overflow-hidden rounded-2xl border bg-white shadow-xl">
 
         {/* HEADER */}
-        <div className="p-5 border-b flex justify-between items-center">
+        <div className="!flex !w-full !items-center !justify-between border-b p-5">
           <h2 className="font-bold text-lg">Add New Product</h2>
 
           {/* ❌ replaced X icon */}
           <button
             onClick={onClose}
-            className="text-2xl font-bold text-gray-500 hover:text-black"
+            className="!flex !h-9 !w-9 !items-center !justify-center rounded-full text-2xl font-bold text-gray-500 hover:bg-slate-100 hover:text-black"
           >
             ✕
           </button>
         </div>
 
         {/* FORM */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4 text-sm">
+        <form onSubmit={handleSubmit} className="!block space-y-4 p-6 text-sm">
 
           {/* NAME */}
           <div>
@@ -101,7 +101,7 @@ export default function AddProductModal({ isOpen, onClose }) {
           </div>
 
           {/* SKU + CATEGORY */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="!grid grid-cols-1 gap-4 sm:grid-cols-2">
 
             <div>
               <label className="block font-medium">SKU</label>
@@ -128,7 +128,7 @@ export default function AddProductModal({ isOpen, onClose }) {
           </div>
 
           {/* PRICE / STOCK / REORDER */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="!grid grid-cols-1 gap-4 sm:grid-cols-3">
 
             <div>
               <label className="block font-medium">Price</label>
@@ -169,7 +169,7 @@ export default function AddProductModal({ isOpen, onClose }) {
           </div>
 
           {/* BUTTONS */}
-          <div className="flex justify-end gap-3 pt-4">
+          <div className="!flex !justify-end gap-3 pt-4">
 
             <button
               type="button"
