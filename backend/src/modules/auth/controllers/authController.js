@@ -9,10 +9,35 @@ const sanitizeUser = (user) => {
   return safeUser;
 };
 
+const normalizePublicRole = (role) => {
+  const normalized = String(role || "cashier")
+    .trim()
+    .toLowerCase()
+    .replace(/[\s_]+/g, "-");
+
+  if (normalized === "manager" || normalized === "inventory") {
+    return "inventory-manager";
+  }
+
+  if (["cashier", "inventory-manager"].includes(normalized)) {
+    return normalized;
+  }
+
+  return "";
+};
+
 const registerUser = async (req, res) => {
   try {
-    const { name, password, role } = req.body;
+    const { name, password } = req.body;
     const email = req.body.email?.trim().toLowerCase();
+    const role = normalizePublicRole(req.body.role);
+
+    if (!role) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid role selected",
+      });
+    }
 
     const userExists = await User.findOne({
       email,

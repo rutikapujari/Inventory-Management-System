@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/authService";
 import { FaUser, FaMailBulk, FaPhone, FaLock } from "react-icons/fa";
 
+const allowedRoles = ["cashier", "inventory-manager"];
+
 function Register() {
   const navigate = useNavigate();
 
@@ -27,10 +29,22 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const role = allowedRoles.includes(formData.role) ? formData.role : "";
+
+    if (!role) {
+      setSuccess(false);
+      setMessage("Please select a valid role");
+      return;
+    }
+
     try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
       const data = await registerUser({
         ...formData,
         email: formData.email.trim().toLowerCase(),
+        role,
       });
 
       console.log(data);
@@ -47,7 +61,7 @@ function Register() {
       });
 
       setTimeout(() => {
-        navigate("/login");
+        navigate("/login", { replace: true });
       }, 2000);
     } catch (error) {
       console.error(error);

@@ -8,6 +8,11 @@ exports.registerValidation = [
   body("email").isEmail().withMessage("Valid email required"),
 
   body("password").isLength({ min: 6 }).withMessage("Password minimum 6 chars"),
+
+  body("role")
+    .optional()
+    .isIn(["cashier", "inventory-manager"])
+    .withMessage("Role must be cashier or inventory-manager"),
 ];
 
 // ================= LOGIN VALIDATION =================

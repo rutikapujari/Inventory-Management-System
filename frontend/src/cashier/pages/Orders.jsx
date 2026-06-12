@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Eye, Printer, RotateCcw, XCircle } from "lucide-react";
 import API from "../../api/axios";
 import { CASHIER_ENDPOINTS } from "../api/config";
 
@@ -132,6 +133,9 @@ function Orders() {
     }
   };
 
+  const actionButtonClass =
+    "inline-flex h-10 w-10 items-center justify-center rounded-xl text-white shadow-sm transition hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2";
+
   return (
     <div className="space-y-6 p-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -201,35 +205,45 @@ function Orders() {
                       <td className="p-4">₹{amount}</td>
                       <td className="p-4">{status}</td>
                       <td className="p-4">{date}</td>
-                      <td className="p-4 flex flex-wrap gap-2">
+                      <td className="p-4">
+                        <div className="flex flex-wrap gap-2">
                         <button
                           type="button"
                           onClick={() => handleViewOrder(order)}
-                          className="rounded-2xl bg-blue-600 text-white px-3 py-2"
+                          title="View order"
+                          aria-label="View order"
+                          className={`${actionButtonClass} bg-blue-600 focus:ring-blue-500`}
                         >
-                          View
+                          <Eye size={18} />
                         </button>
                         <button
                           type="button"
                           onClick={() => handlePrintOrder(order)}
-                          className="rounded-2xl bg-indigo-600 text-white px-3 py-2"
+                          title="Print order"
+                          aria-label="Print order"
+                          className={`${actionButtonClass} bg-indigo-600 focus:ring-indigo-500`}
                         >
-                          Print
+                          <Printer size={18} />
                         </button>
                         <button
                           type="button"
                           onClick={() => openRefund(order)}
-                          className="rounded-2xl bg-amber-500 text-white px-3 py-2"
+                          title="Refund order"
+                          aria-label="Refund order"
+                          className={`${actionButtonClass} bg-amber-500 focus:ring-amber-500`}
                         >
-                          Refund
+                          <RotateCcw size={18} />
                         </button>
                         <button
                           type="button"
                           onClick={() => handleCancelOrder(orderId)}
-                          className="rounded-2xl bg-red-600 text-white px-3 py-2"
+                          title="Cancel order"
+                          aria-label="Cancel order"
+                          className={`${actionButtonClass} bg-red-600 focus:ring-red-500`}
                         >
-                          Cancel
+                          <XCircle size={18} />
                         </button>
+                        </div>
                       </td>
                     </tr>
                   );

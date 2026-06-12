@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { QRCode } from "react-qr-code";
 import API from "../../api/axios";
 import { CASHIER_ENDPOINTS } from "../api/config";
@@ -33,6 +33,8 @@ function Billing() {
   const [discounts, setDiscounts] = useState([]);
   const [search, setSearch] = useState("");
   const [barcodeInput, setBarcodeInput] = useState("");
+  const [scannerOpen, setScannerOpen] = useState(false);
+  const [scannerStatus, setScannerStatus] = useState("");
   const [cart, setCart] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState("");
   const [selectedDiscount, setSelectedDiscount] = useState("");
@@ -48,6 +50,10 @@ function Billing() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const videoRef = useRef(null);
+  const streamRef = useRef(null);
+  const scanIntervalRef = useRef(null);
+  const barcodeInputRef = useRef(null);
   const currentUser = JSON.parse(localStorage.getItem("user") || "null");
 
   useEffect(() => {
@@ -150,11 +156,31 @@ function Billing() {
     setCart((prev) => prev.filter((item) => item.productId !== productId));
   };
 
-  const scanBarcode = () => {
-    const code = barcodeInput.trim().toLowerCase();
+  const stopCameraScanner = () => {
+    if (scanIntervalRef.current) {
+      clearInterval(scanIntervalRef.current);
+      scanIntervalRef.current = null;
+    }
+
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
+    }
+
+    setScannerOpen(false);
+    setScannerStatus("");
+  };
+
+  useEffect(() => () => stopCameraScanner(), []);
+
+  const scanBarcode = (rawCode = barcodeInput) => {
+    const scannedCode = String(rawCode || "").trim();
+    const code = scannedCode.toLowerCase();
 
     if (!code) {
-      setError("Scan or enter a barcode first.");
+      setError("");
+      setMessage("Enter or scan a barcode / SKU first.");
+      barcodeInputRef.current?.focus();
       return;
     }
 
@@ -165,14 +191,70 @@ function Billing() {
     );
 
     if (!product) {
-      setError(`No product found for barcode ${barcodeInput}.`);
+      setError(`No product found for barcode ${scannedCode}.`);
       return;
     }
 
     addToCart(product);
     setBarcodeInput("");
+    stopCameraScanner();
     setError("");
     setMessage(`${product.name} added from barcode scan.`);
+  };
+
+  const startCameraScanner = async () => {
+    setError("");
+    setMessage("");
+
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setError("Camera scanner is not supported in this browser. Use the barcode input instead.");
+      return;
+    }
+
+    if (!("BarcodeDetector" in window)) {
+      setError("Camera barcode detection is not supported in this browser. Use the barcode input instead.");
+      return;
+    }
+
+    try {
+      setScannerOpen(true);
+      setScannerStatus("Starting camera...");
+
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" },
+      });
+
+      streamRef.current = stream;
+
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        await videoRef.current.play();
+      }
+
+      const detector = new window.BarcodeDetector({
+        formats: ["ean_13", "ean_8", "code_128", "code_39", "upc_a", "upc_e", "qr_code"],
+      });
+
+      setScannerStatus("Point camera at product barcode.");
+
+      scanIntervalRef.current = setInterval(async () => {
+        if (!videoRef.current || videoRef.current.readyState < 2) return;
+
+        try {
+          const barcodes = await detector.detect(videoRef.current);
+          const scannedCode = barcodes[0]?.rawValue;
+
+          if (scannedCode) {
+            scanBarcode(scannedCode);
+          }
+        } catch {
+          setScannerStatus("Unable to read barcode. Keep barcode steady in frame.");
+        }
+      }, 700);
+    } catch (err) {
+      stopCameraScanner();
+      setError(err.message || "Unable to start camera scanner.");
+    }
   };
 
   const activeDiscount = useMemo(
@@ -196,6 +278,7 @@ function Billing() {
   const isOnlinePayment = paymentMethod === "UPI" || paymentMethod === "CARD";
   const isRazorpayPayment = paymentMethod === "UPI" && onlineProvider === "RAZORPAY";
   const upiPaymentUrl = createUpiPaymentUrl(total, paymentReference);
+  const hasBarcodeInput = Boolean(barcodeInput.trim());
 
   useEffect(() => {
     setRazorpayQr(null);
@@ -380,8 +463,9 @@ function Billing() {
             </div>
 
             <div className="grid gap-3">
-              <div className="grid grid-cols-[minmax(220px,1fr)_auto] gap-3">
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-[minmax(220px,1fr)_auto_auto]">
                 <input
+                  ref={barcodeInputRef}
                   type="text"
                   value={barcodeInput}
                   onChange={(e) => setBarcodeInput(e.target.value)}
@@ -391,17 +475,62 @@ function Billing() {
                       scanBarcode();
                     }
                   }}
-                  placeholder="Scan barcode"
+                  placeholder="Scan or enter barcode / SKU"
                   className="min-w-0 border rounded-2xl px-4 py-3"
                 />
                 <button
                   type="button"
                   onClick={scanBarcode}
-                  className="rounded-2xl bg-slate-900 text-white px-4 py-3"
+                  disabled={!hasBarcodeInput}
+                  className="rounded-2xl bg-slate-900 text-white px-4 py-3 disabled:cursor-not-allowed disabled:bg-slate-300"
                 >
                   Scan
                 </button>
+                <button
+                  type="button"
+                  onClick={scannerOpen ? stopCameraScanner : startCameraScanner}
+                  className={`rounded-2xl px-4 py-3 font-semibold ${
+                    scannerOpen
+                      ? "bg-red-600 text-white"
+                      : "bg-emerald-600 text-white"
+                  }`}
+                >
+                  {scannerOpen ? "Stop Camera" : "Camera Scanner"}
+                </button>
               </div>
+
+              {scannerOpen ? (
+                <div className="rounded-3xl border border-emerald-100 bg-emerald-50 p-4">
+                  <div className="grid gap-4 lg:grid-cols-[320px_1fr] lg:items-center">
+                    <div className="overflow-hidden rounded-2xl bg-slate-950">
+                      <video
+                        ref={videoRef}
+                        muted
+                        playsInline
+                        className="h-56 w-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-emerald-800">
+                        Product Barcode Scanner
+                      </p>
+                      <h3 className="mt-1 text-xl font-bold text-slate-900">
+                        Scan product to add it to cart
+                      </h3>
+                      <p className="mt-2 text-sm text-slate-600">
+                        {scannerStatus || "Camera scanner ready."}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={stopCameraScanner}
+                        className="mt-4 rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white"
+                      >
+                        Close Scanner
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
               <select
