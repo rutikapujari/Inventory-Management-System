@@ -1034,6 +1034,102 @@ body.auth-page.register-page #root :is(div, section, article):has(> form) {
   max-width: 34rem !important;
 }
 
+/* Manager inventory page: keep the stock table centered and prevent the
+   status/action columns from being clipped on laptop-sized screens. */
+.manager-inventory-main {
+  max-width: calc(100vw - 280px);
+}
+
+.manager-inventory-content {
+  min-width: 0;
+}
+
+.manager-inventory-table-wrap {
+  max-width: 100%;
+  overflow-x: auto !important;
+  overflow-y: hidden;
+}
+
+.manager-inventory-table {
+  min-width: 980px;
+  table-layout: fixed;
+}
+
+.manager-inventory-table th,
+.manager-inventory-table td {
+  max-width: none !important;
+  padding-left: 1.25rem !important;
+  padding-right: 1.25rem !important;
+  vertical-align: middle;
+}
+
+.manager-inventory-table th:nth-child(1),
+.manager-inventory-table td:nth-child(1) {
+  width: 30%;
+  min-width: 0 !important;
+}
+
+.manager-inventory-table th:nth-child(2),
+.manager-inventory-table td:nth-child(2) {
+  width: 17%;
+}
+
+.manager-inventory-table th:nth-child(3),
+.manager-inventory-table td:nth-child(3) {
+  width: 13%;
+}
+
+.manager-inventory-table th:nth-child(4),
+.manager-inventory-table td:nth-child(4) {
+  width: 16%;
+}
+
+.manager-inventory-table th:nth-child(5),
+.manager-inventory-table td:nth-child(5) {
+  width: 13%;
+  min-width: 0 !important;
+}
+
+.manager-inventory-table th:nth-child(6),
+.manager-inventory-table td:nth-child(6) {
+  width: 11%;
+  min-width: 0 !important;
+}
+
+.manager-inventory-table td:first-child > div {
+  min-width: 0 !important;
+}
+
+.manager-inventory-table td:first-child > div > div {
+  min-width: 0 !important;
+  max-width: none !important;
+}
+
+.manager-inventory-table td:first-child img {
+  flex: 0 0 auto;
+}
+
+.manager-inventory-table td:first-child h3,
+.manager-inventory-table td:first-child p {
+  overflow-wrap: anywhere;
+}
+
+.manager-inventory-table td:nth-child(5) span {
+  display: inline-flex;
+  min-width: 7rem;
+  justify-content: center;
+  white-space: normal;
+}
+
+.manager-inventory-table td:nth-child(6) > div {
+  gap: 0.75rem !important;
+}
+
+.manager-inventory-table td:nth-child(6) button {
+  width: 3rem !important;
+  height: 3rem !important;
+}
+
 /* Cashier dark mode. The switch lives in cashier settings and these scoped
    overrides make the existing Tailwind-heavy cashier pages respond together. */
 .cashier-shell.cashier-dark {

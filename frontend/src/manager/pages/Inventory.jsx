@@ -224,10 +224,10 @@ const Inventory = () => {
   };
 
   return (
-    <div className="flex bg-[#f5f7fb] min-h-screen">
+    <div className="manager-inventory-page flex bg-[#f5f7fb] min-h-screen">
       <Sidebar />
 
-      <div className="ml-[280px] w-full">
+      <div className="manager-inventory-main ml-[280px] min-w-0 flex-1">
         <div className="bg-white px-10 py-6 flex justify-between items-center border-b">
           <div className="relative w-[420px]">
             <FaSearch className="absolute top-5 left-5 text-gray-400" />
@@ -256,7 +256,7 @@ const Inventory = () => {
           </div>
         </div>
 
-        <div className="p-10">
+        <div className="manager-inventory-content mx-auto w-full max-w-[1180px] p-10">
           <div className="flex justify-between items-center mb-10">
             <div>
               <h1 className="text-6xl font-bold text-[#061539]">Inventory</h1>
@@ -368,8 +368,8 @@ const Inventory = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-3xl overflow-hidden shadow-sm">
-            <table className="w-full">
+          <div className="manager-inventory-table-wrap bg-white rounded-3xl shadow-sm">
+            <table className="manager-inventory-table w-full">
               <thead className="bg-[#f8f9fc] text-gray-500 text-lg">
                 <tr>
                   <th className="p-6 text-left">PRODUCT</th>
