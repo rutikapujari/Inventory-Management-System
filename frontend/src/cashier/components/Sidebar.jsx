@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useCashierTheme } from "../context/CashierThemeContext";
 
 import {
   FaTachometerAlt,
@@ -16,6 +17,7 @@ import {
 function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { darkMode } = useCashierTheme();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -68,7 +70,11 @@ function Sidebar() {
   ];
 
   return (
-    <div className="w-64 min-h-screen bg-blue-900 text-white p-5 flex flex-col justify-between">
+    <div
+      className={`w-64 min-h-screen text-white p-5 flex flex-col justify-between transition-colors duration-300 ${
+        darkMode ? "bg-slate-950" : "bg-blue-900"
+      }`}
+    >
       <div>
         <h1 className="text-3xl font-bold mb-10 text-center">Cashier Panel</h1>
 
@@ -79,8 +85,12 @@ function Sidebar() {
                 to={item.path}
                 className={`flex items-center gap-3 p-3 rounded-lg transition duration-300 ${
                   location.pathname === item.path
-                    ? "bg-blue-600"
-                    : "hover:bg-gray-700"
+                    ? darkMode
+                      ? "bg-indigo-600"
+                      : "bg-blue-600"
+                    : darkMode
+                      ? "hover:bg-slate-800"
+                      : "hover:bg-gray-700"
                 }`}
               >
                 <span className="text-lg">{item.icon}</span>

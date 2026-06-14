@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useCashierTheme } from "../context/CashierThemeContext";
 
 function Settings() {
+  const { darkMode, setDarkMode } = useCashierTheme();
   const [profile, setProfile] = useState({
     name: "Cashier User",
     email: "cashier@example.com",
     phone: "+91 98765 43210",
   });
   const [preferences, setPreferences] = useState({
-    darkMode: false,
+    darkMode,
     notifications: true,
     autoReceipt: true,
   });
@@ -19,8 +21,20 @@ function Settings() {
   };
 
   const handlePreferenceToggle = (key) => {
-    setPreferences({ ...preferences, [key]: !preferences[key] });
+    setPreferences((current) => {
+      const nextValue = !current[key];
+
+      if (key === "darkMode") {
+        setDarkMode(nextValue);
+      }
+
+      return { ...current, [key]: nextValue };
+    });
   };
+
+  useEffect(() => {
+    setPreferences((current) => ({ ...current, darkMode }));
+  }, [darkMode]);
 
   const handlePasswordChange = (e) => {
     setPassword({ ...password, [e.target.name]: e.target.value });
@@ -159,6 +173,7 @@ function Settings() {
                 <button
                   type="button"
                   onClick={() => handlePreferenceToggle(item.key)}
+                  aria-pressed={preferences[item.key]}
                   className={`h-11 w-20 rounded-full transition ${
                     preferences[item.key]
                       ? "bg-indigo-600"
