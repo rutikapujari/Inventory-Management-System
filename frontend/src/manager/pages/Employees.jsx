@@ -303,7 +303,7 @@ const Employees = () => {
     <div className="flex bg-[#f5f7fb] min-h-screen">
       <Sidebar />
 
-      <div className="ml-[280px] w-full">
+      <div className="ml-[280px] min-w-0 flex-1">
         <div className="bg-white px-10 py-6 flex justify-between items-center border-b">
           <div className="relative w-[420px]">
             <FaSearch className="absolute top-5 left-5 text-gray-400" />
@@ -341,7 +341,7 @@ const Employees = () => {
           </div>
         </div>
 
-        <div className="p-10">
+        <div className="mx-auto w-full max-w-[1180px] p-10">
           <div className="flex justify-between items-center mb-10">
             <div>
               <h1 className="text-6xl font-bold text-[#061539]">Employees</h1>
@@ -515,8 +515,8 @@ const Employees = () => {
             </select>
           </div>
 
-          <div className="bg-white rounded-3xl overflow-hidden shadow-sm">
-            <table className="w-full">
+          <div className="bg-white rounded-3xl overflow-x-auto shadow-sm">
+            <table className="min-w-[980px] w-full">
               <thead className="bg-[#f8f9fc] text-gray-500 text-lg">
                 <tr>
                   <th className="p-6 text-left">EMPLOYEE</th>
