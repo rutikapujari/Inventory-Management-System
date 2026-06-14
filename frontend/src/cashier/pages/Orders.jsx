@@ -11,6 +11,7 @@ function Orders() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [hoveredOrder, setHoveredOrder] = useState(null);
   const [refundOrder, setRefundOrder] = useState(null);
   const [refundForm, setRefundForm] = useState({
     refundAmount: "",
@@ -138,6 +139,7 @@ function Orders() {
 
   const actionButtonClass =
     "inline-flex h-10 w-10 items-center justify-center rounded-xl border shadow-sm transition hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2";
+  const detailOrder = hoveredOrder || selectedOrder;
 
   return (
     <div className="space-y-6 p-6">
@@ -204,14 +206,19 @@ function Orders() {
                   ).toLocaleDateString();
 
                   return (
-                    <tr key={orderId} className="border-b last:border-b-0">
+                    <tr
+                      key={orderId}
+                      onMouseEnter={() => setHoveredOrder(order)}
+                      onMouseLeave={() => setHoveredOrder(null)}
+                      className="border-b transition-colors last:border-b-0 hover:bg-slate-50"
+                    >
                       <td className="p-4">{orderId}</td>
                       <td className="p-4">{customerName}</td>
                       <td className="p-4">Rs. {amount}</td>
                       <td className="p-4">{status}</td>
                       <td className="p-4">{date}</td>
                       <td className="p-4">
-                        <div className="flex flex-wrap gap-2">
+                        <div className="grid w-24 grid-cols-2 gap-2">
                           <button
                             type="button"
                             onClick={() => handleViewOrder(order)}
@@ -265,30 +272,30 @@ function Orders() {
         )}
       </div>
 
-      {selectedOrder ? (
-        <div className="rounded-3xl bg-white p-6 shadow">
+      {detailOrder ? (
+        <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow">
           <h2 className="mb-4 text-xl font-semibold">Order Details</h2>
-          <div className="grid gap-3 md:grid-cols-2">
+          <div className="grid gap-3 md:grid-cols-4">
             <div>
               <p className="text-sm text-gray-500">Order ID</p>
-              <p className="font-medium">{formatOrderId(selectedOrder)}</p>
+              <p className="break-all font-medium">{formatOrderId(detailOrder)}</p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Customer</p>
               <p className="font-medium">
-                {selectedOrder.customer?.name || selectedOrder.customer || "-"}
+                {detailOrder.customer?.name || detailOrder.customer || "-"}
               </p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Amount</p>
               <p className="font-medium">
-                Rs. {selectedOrder.totalAmount || selectedOrder.amount || "-"}
+                Rs. {detailOrder.totalAmount || detailOrder.amount || "-"}
               </p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Status</p>
               <p className="font-medium">
-                {selectedOrder.status || selectedOrder.orderStatus || "Pending"}
+                {detailOrder.status || detailOrder.orderStatus || "Pending"}
               </p>
             </div>
           </div>
