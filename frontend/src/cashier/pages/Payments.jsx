@@ -162,29 +162,22 @@ function Payments() {
             {error}
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
+          <div className="overflow-hidden">
+            <table className="w-full table-fixed text-left text-sm">
               <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
                 <tr>
-                  <th className="p-4">Payment ID</th>
-                  <th className="p-4">Order ID</th>
-                  <th className="p-4">Customer</th>
-                  <th className="p-4">Amount</th>
-                  <th className="p-4">Method</th>
-                  <th className="p-4">Reference</th>
-                  <th className="p-4">Status</th>
+                  <th className="w-[24%] p-4">Payment ID</th>
+                  <th className="w-[18%] p-4">Customer</th>
+                  <th className="w-[15%] p-4">Amount</th>
+                  <th className="w-[13%] p-4">Method</th>
+                  <th className="w-[16%] p-4">Reference</th>
+                  <th className="w-[14%] p-4">Status</th>
                 </tr>
               </thead>
               <tbody>
                 {payments.length ? (
                   payments.map((payment) => {
                     const paymentId = payment._id || payment.id || "-";
-                    const orderId =
-                      payment.order?.orderNumber ||
-                      payment.order?._id ||
-                      payment.order ||
-                      payment.orderId ||
-                      "-";
                     const customerName =
                       payment.order?.customer?.name ||
                       payment.customer?.name ||
@@ -204,13 +197,10 @@ function Payments() {
                         key={paymentId}
                         className="border-b last:border-b-0 hover:bg-slate-50"
                       >
-                        <td className="max-w-[180px] truncate p-4 font-mono text-xs text-slate-700">
+                        <td className="truncate p-4 font-mono text-xs text-slate-700">
                           {paymentId}
                         </td>
-                        <td className="max-w-[160px] truncate p-4 font-mono text-xs text-slate-700">
-                          {orderId}
-                        </td>
-                        <td className="p-4 font-medium text-slate-900">
+                        <td className="truncate p-4 font-medium text-slate-900">
                           {customerName}
                         </td>
                         <td className="p-4 font-semibold text-slate-900">
@@ -221,7 +211,7 @@ function Payments() {
                             {method}
                           </span>
                         </td>
-                        <td className="max-w-[190px] truncate p-4 font-mono text-xs text-slate-600">
+                        <td className="truncate p-4 font-mono text-xs text-slate-600">
                           {reference}
                         </td>
                         <td className="p-4">
@@ -237,7 +227,7 @@ function Payments() {
                   })
                 ) : (
                   <tr>
-                    <td colSpan={7} className="p-8 text-center text-gray-500">
+                    <td colSpan={6} className="p-8 text-center text-gray-500">
                       No payments found.
                     </td>
                   </tr>
