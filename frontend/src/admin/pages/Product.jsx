@@ -106,18 +106,20 @@ export default function Product() {
                   <td className="p-3">{product.category ?? "—"}</td>
                   <td className="p-3">{product.stock ?? 0}</td>
                   <td className="p-3">₹{product.sellingPrice ?? product.price ?? "—"}</td>
-                  <td className="p-3 space-x-2">
-                    <button onClick={() => handleEditProduct(product._id || product.id)} className="rounded-xl bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 text-sm flex items-center gap-2 transition-colors">
-                      <Edit2 size={14} />
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(product._id || product.id)}
-                      className="rounded-xl bg-red-600 hover:bg-red-700 text-white px-3 py-1 text-sm flex items-center gap-2 transition-colors"
-                    >
-                      <Trash2 size={14} />
-                      Delete
-                    </button>
+                  <td className="p-3">
+                    <div className="flex flex-col items-start gap-3">
+                      <button onClick={() => handleEditProduct(product._id || product.id)} className="rounded-xl bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 text-sm flex items-center gap-2 transition-colors">
+                        <Edit2 size={14} />
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(product._id || product.id)}
+                        className="rounded-xl bg-red-600 hover:bg-red-700 text-white px-3 py-1 text-sm flex items-center gap-2 transition-colors"
+                      >
+                        <Trash2 size={14} />
+                        Delete
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))
