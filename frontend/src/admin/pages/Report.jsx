@@ -13,20 +13,6 @@ import {
   Truck,
 } from "lucide-react";
 import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Cell,
-  Line,
-  LineChart,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
-import {
   getLowStockReport,
   getPurchaseReport,
   getStockReport,
@@ -47,6 +33,125 @@ const getArray = (response, key) => {
   const data = response?.data || {};
   return Array.isArray(data) ? data : data[key] || data.data || [];
 };
+
+function NativeBarChart({ data = [] }) {
+  if (!data.length) {
+    return <div className="flex h-80 items-center justify-center text-sm font-semibold text-slate-400">No category data</div>;
+  }
+
+  const maxValue = Math.max(...data.map((item) => Number(item.value) || 0), 1);
+
+  return (
+    <div className="h-80">
+      <div className="flex h-64 items-end gap-4 border-b border-l border-slate-200 px-3 pb-3">
+        {data.map((item) => {
+          const value = Number(item.value) || 0;
+          const height = Math.max((value / maxValue) * 220, 12);
+
+          return (
+            <div key={item.name} className="flex min-w-0 flex-1 flex-col items-center gap-2">
+              <div className="flex h-56 w-full items-end justify-center">
+                <div
+                  className="w-full max-w-16 rounded-t-xl bg-gradient-to-t from-blue-600 to-cyan-400 shadow-lg shadow-blue-100"
+                  style={{ height: `${height}px` }}
+                  title={`${item.name}: ${value}`}
+                />
+              </div>
+              <span className="max-w-full truncate text-xs font-semibold text-slate-500" title={item.name}>
+                {item.name}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function NativeDonutChart({ data = [], colors = [] }) {
+  if (!data.length) {
+    return <div className="flex h-72 items-center justify-center text-sm font-semibold text-slate-400">No stock data</div>;
+  }
+
+  const total = data.reduce((sum, item) => sum + (Number(item.value) || 0), 0);
+  if (!total) {
+    return <div className="flex h-72 items-center justify-center text-sm font-semibold text-slate-400">No stock data</div>;
+  }
+
+  const safeColors = colors.length ? colors : ["#2563eb"];
+  let cumulative = 0;
+
+  return (
+    <div className="flex h-72 items-center justify-center">
+      <svg className="h-56 w-56 -rotate-90 drop-shadow-sm" viewBox="0 0 120 120" role="img" aria-label="Stock health chart">
+        <circle cx="60" cy="60" r="42" fill="none" stroke="#F1F5F9" strokeWidth="18" />
+        {data.map((item, index) => {
+          const percent = (Number(item.value) || 0) / total;
+          const dashArray = `${percent * 263.89} 263.89`;
+          const dashOffset = -cumulative * 263.89;
+          cumulative += percent;
+
+          return (
+            <circle
+              key={item.name}
+              cx="60"
+              cy="60"
+              r="42"
+              fill="none"
+              stroke={safeColors[index % safeColors.length]}
+              strokeWidth="18"
+              strokeDasharray={dashArray}
+              strokeDashoffset={dashOffset}
+              strokeLinecap="round"
+            />
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
+function NativeLineChart({ data = [] }) {
+  if (!data.length) {
+    return <div className="flex h-72 items-center justify-center text-sm font-semibold text-slate-400">No purchase data</div>;
+  }
+
+  const width = 560;
+  const height = 240;
+  const padding = 30;
+  const values = data.map((item) => Number(item.value) || 0);
+  const maxValue = Math.max(...values, 1);
+  const minValue = Math.min(...values, 0);
+  const range = Math.max(maxValue - minValue, 1);
+  const points = data.map((item, index) => {
+    const x = padding + (index * (width - padding * 2)) / Math.max(data.length - 1, 1);
+    const y = height - padding - ((Number(item.value) - minValue) / range) * (height - padding * 2);
+    return { ...item, x, y };
+  });
+  const path = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`).join(" ");
+  const fillPath = `${path} L ${points.at(-1)?.x || padding} ${height - padding} L ${points[0]?.x || padding} ${height - padding} Z`;
+
+  return (
+    <div className="h-72">
+      <svg className="h-full w-full overflow-visible" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Purchase trend chart">
+        {[0, 1, 2, 3].map((line) => {
+          const y = padding + (line * (height - padding * 2)) / 3;
+          return <line key={line} x1={padding} x2={width - padding} y1={y} y2={y} stroke="#E2E8F0" strokeDasharray="4 4" />;
+        })}
+        <path d={fillPath} fill="#d1fae5" opacity="0.8" />
+        <path d={path} fill="none" stroke="#10b981" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+        {points.map((point) => (
+          <g key={point.name}>
+            <circle cx={point.x} cy={point.y} r="5" fill="#10b981" stroke="#fff" strokeWidth="3" />
+            <text x={point.x} y={height - 8} textAnchor="middle" className="fill-slate-500 text-[12px] font-semibold">
+              {point.name}
+            </text>
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+}
 
 export default function Report() {
   const [products, setProducts] = useState([]);
@@ -258,17 +363,7 @@ export default function Report() {
                 <BarChart3 size={24} />
               </div>
             </div>
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={categoryData}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                  <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-                  <YAxis tick={{ fontSize: 12 }} />
-                  <Tooltip />
-                  <Bar dataKey="value" radius={[12, 12, 0, 0]} fill="#2563eb" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+            <NativeBarChart data={categoryData} />
           </section>
 
           <section className={chartCardClass}>
@@ -281,18 +376,7 @@ export default function Report() {
                 <CheckCircle2 size={24} />
               </div>
             </div>
-            <div className="h-72">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie data={stockHealth} dataKey="value" nameKey="name" innerRadius={62} outerRadius={96} paddingAngle={4}>
-                    {stockHealth.map((entry, index) => (
-                      <Cell key={entry.name} fill={statusColors[index % statusColors.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
+            <NativeDonutChart data={stockHealth} colors={statusColors} />
             <div className="!grid grid-cols-2 gap-3">
               {stockHealth.map((item, index) => (
                 <div key={item.name} className="rounded-2xl bg-slate-50 p-3">
@@ -316,17 +400,7 @@ export default function Report() {
                 <Sparkles size={24} />
               </div>
             </div>
-            <div className="h-72">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={purchaseTrend}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                  <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-                  <YAxis tick={{ fontSize: 12 }} />
-                  <Tooltip formatter={(value) => currency.format(value)} />
-                  <Line type="monotone" dataKey="value" stroke="#10b981" strokeWidth={3} dot={{ r: 4, fill: "#10b981" }} />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+            <NativeLineChart data={purchaseTrend} />
           </section>
 
           <section className="!block overflow-hidden rounded-[28px] border border-slate-100 bg-white shadow-xl shadow-slate-200/60">
