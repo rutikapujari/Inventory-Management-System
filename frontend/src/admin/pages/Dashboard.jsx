@@ -1,10 +1,135 @@
 import React from 'react';
-import { DollarSign, ShoppingBag, Layers, TrendingUp, AlertCircle, Loader2, ArrowUpRight, Users, Activity } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
+import { DollarSign, ShoppingBag, TrendingUp, AlertCircle, Loader2, ArrowUpRight, Users, Activity } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+
+function BarGraph({ data = [] }) {
+  if (!data.length) {
+    return <div className="flex h-72 items-center justify-center text-sm font-medium text-slate-400">No sales data</div>;
+  }
+
+  const values = data.map((item) => Number(item.value) || 0);
+  const maxValue = Math.max(...values, 1);
+  const chartHeight = 180;
+
+  return (
+    <div className="h-72">
+      <div className="flex h-56 items-end gap-4 border-b border-l border-slate-200 px-3 pb-3">
+        {data.map((item) => {
+          const height = Math.max((Number(item.value) / maxValue) * chartHeight, 12);
+
+          return (
+            <div key={item.name} className="flex min-w-0 flex-1 flex-col items-center gap-2">
+              <div className="flex h-48 w-full items-end justify-center">
+                <div
+                  className="w-full max-w-14 rounded-t-lg bg-blue-600 shadow-sm shadow-blue-200 transition-all"
+                  style={{ height: `${height}px` }}
+                  title={`${item.name}: ${item.value}`}
+                />
+              </div>
+              <span className="text-xs font-medium text-slate-500">{item.name}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function LineGraph({ data = [] }) {
+  if (!data.length) {
+    return <div className="flex h-64 items-center justify-center text-sm font-medium text-slate-400">No revenue data</div>;
+  }
+
+  const width = 520;
+  const height = 220;
+  const padding = 28;
+  const values = data.map((item) => Number(item.value) || 0);
+  const maxValue = Math.max(...values, 1);
+  const minValue = Math.min(...values, 0);
+  const range = Math.max(maxValue - minValue, 1);
+  const points = data.map((item, index) => {
+    const x = padding + (index * (width - padding * 2)) / Math.max(data.length - 1, 1);
+    const y = height - padding - ((Number(item.value) - minValue) / range) * (height - padding * 2);
+    return { ...item, x, y };
+  });
+  const path = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`).join(' ');
+  const fillPath = `${path} L ${points.at(-1)?.x || padding} ${height - padding} L ${points[0]?.x || padding} ${height - padding} Z`;
+
+  return (
+    <div className="h-64">
+      <svg className="h-full w-full overflow-visible" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Weekly revenue chart">
+        {[0, 1, 2, 3].map((line) => {
+          const y = padding + (line * (height - padding * 2)) / 3;
+          return <line key={line} x1={padding} x2={width - padding} y1={y} y2={y} stroke="#E2E8F0" strokeDasharray="4 4" />;
+        })}
+        <path d={fillPath} fill="#dbeafe" opacity="0.85" />
+        <path d={path} fill="none" stroke="#2563eb" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+        {points.map((point) => (
+          <g key={point.name}>
+            <circle cx={point.x} cy={point.y} r="5" fill="#2563eb" stroke="#fff" strokeWidth="3" />
+            <text x={point.x} y={height - 6} textAnchor="middle" className="fill-slate-500 text-[12px] font-medium">
+              {point.name}
+            </text>
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+}
+
+function DonutChart({ data = [], colors = [] }) {
+  if (!data.length) {
+    return <div className="flex h-72 items-center justify-center text-sm font-medium text-slate-400">No order data</div>;
+  }
+
+  const safeColors = colors.length ? colors : ['#2563eb'];
+  const total = data.reduce((sum, item) => sum + (Number(item.value) || 0), 0) || 1;
+  let cumulative = 0;
+
+  return (
+    <div className="flex h-72 flex-col items-center justify-center gap-5">
+      <svg className="h-44 w-44 -rotate-90" viewBox="0 0 120 120" role="img" aria-label="Order distribution chart">
+        <circle cx="60" cy="60" r="42" fill="none" stroke="#F1F5F9" strokeWidth="18" />
+        {data.map((item, index) => {
+          const percent = (Number(item.value) || 0) / total;
+          const dashArray = `${percent * 263.89} 263.89`;
+          const dashOffset = -cumulative * 263.89;
+          cumulative += percent;
+
+          return (
+            <circle
+              key={item.name}
+              cx="60"
+              cy="60"
+              r="42"
+              fill="none"
+              stroke={safeColors[index % safeColors.length]}
+              strokeWidth="18"
+              strokeDasharray={dashArray}
+              strokeDashoffset={dashOffset}
+              strokeLinecap="round"
+            />
+          );
+        })}
+      </svg>
+      <div className="grid w-full grid-cols-2 gap-3">
+        {data.map((item, index) => (
+          <div key={item.name} className="flex items-center gap-2 text-sm text-slate-600">
+            <span className="h-3 w-3 rounded-full" style={{ backgroundColor: safeColors[index % safeColors.length] }} />
+            <span className="font-medium">{item.name}</span>
+            <span className="ml-auto text-slate-900">{item.value}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Dashboard() {
   const { dashboardStats, dashboardDetails, loadingStates, errorStates, products } = useApp();
+  const salesData = dashboardDetails.salesData || [];
+  const revenueData = dashboardDetails.revenueData || [];
+  const recentOrders = dashboardDetails.recentOrders || [];
 
   if (loadingStates.dashboard) {
     return (
@@ -78,35 +203,14 @@ export default function Dashboard() {
             </div>
             <span className="text-sm font-semibold text-emerald-600 bg-emerald-50 px-4 py-2 rounded-2xl">+12.5%</span>
           </div>
-          <div className="h-72">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={dashboardDetails.salesData}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
-                <XAxis dataKey="name" tickLine={false} stroke="#94A3B8" style={{ fontSize: '12px' }} />
-                <YAxis tickLine={false} stroke="#94A3B8" style={{ fontSize: '12px' }} />
-                <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }} />
-                <Bar dataKey="value" fill="#2563eb" radius={[8, 8, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+          <BarGraph data={salesData} />
         </div>
 
         {/* Pie Chart */}
         <div className="bg-white rounded-3xl shadow-lg p-6 border border-slate-100">
           <div>
             <h2 className="text-xl font-bold text-slate-900 mb-6">Order Distribution</h2>
-            <div className="h-72">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie data={pieData} cx="50%" cy="50%" innerRadius={60} outerRadius={100} dataKey="value">
-                    {pieData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={pieColors[index]} />
-                    ))}
-                  </Pie>
-                  <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }} />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
+            <DonutChart data={pieData} colors={pieColors} />
           </div>
         </div>
       </div>
@@ -121,17 +225,7 @@ export default function Dashboard() {
             </div>
             <Activity size={20} className="text-indigo-600" />
           </div>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={dashboardDetails.revenueData}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
-                <XAxis dataKey="name" tickLine={false} stroke="#94A3B8" style={{ fontSize: '12px' }} />
-                <YAxis tickLine={false} stroke="#94A3B8" style={{ fontSize: '12px' }} />
-                <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }} />
-                <Line type="monotone" dataKey="value" stroke="#2563eb" strokeWidth={3} dot={{ fill: '#2563eb', r: 5 }} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+          <LineGraph data={revenueData} />
         </div>
 
         <div className="bg-white rounded-3xl shadow-lg p-6 border border-slate-100">
@@ -183,7 +277,7 @@ export default function Dashboard() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {dashboardDetails.recentOrders.map((order, i) => (
+              {recentOrders.map((order, i) => (
                 <tr key={i} className="hover:bg-slate-50 transition-colors">
                   <td className="p-4 font-semibold text-slate-900">{order.id}</td>
                   <td className="p-4 text-slate-700">{order.name}</td>
