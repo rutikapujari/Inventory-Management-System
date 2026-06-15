@@ -146,37 +146,124 @@ function NativeDonutChart({ data = [], colors = [] }) {
 
 function NativeLineChart({ data = [] }) {
   if (!data.length) {
-    return <div className="flex h-72 items-center justify-center text-sm font-semibold text-slate-400">No purchase data</div>;
+    return (
+      <div className="flex h-72 items-center justify-center rounded-3xl bg-slate-50 text-sm font-semibold text-slate-400">
+        No purchase data
+      </div>
+    );
   }
 
   const width = 560;
-  const height = 240;
-  const padding = 30;
+  const height = 260;
+  const paddingX = 42;
+  const paddingTop = 52;
+  const paddingBottom = 44;
   const values = data.map((item) => Number(item.value) || 0);
+  const total = values.reduce((sum, value) => sum + value, 0);
   const maxValue = Math.max(...values, 1);
   const minValue = Math.min(...values, 0);
   const range = Math.max(maxValue - minValue, 1);
+  const bestPoint = data.reduce(
+    (best, item) => (Number(item.value) > Number(best.value) ? item : best),
+    data[0],
+  );
+
   const points = data.map((item, index) => {
-    const x = padding + (index * (width - padding * 2)) / Math.max(data.length - 1, 1);
-    const y = height - padding - ((Number(item.value) - minValue) / range) * (height - padding * 2);
+    const singlePointOffset = data.length === 1 ? 0.5 : index / Math.max(data.length - 1, 1);
+    const x = paddingX + singlePointOffset * (width - paddingX * 2);
+    const y =
+      height -
+      paddingBottom -
+      ((Number(item.value) - minValue) / range) * (height - paddingTop - paddingBottom);
     return { ...item, x, y };
   });
-  const path = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`).join(" ");
-  const fillPath = `${path} L ${points.at(-1)?.x || padding} ${height - padding} L ${points[0]?.x || padding} ${height - padding} Z`;
+  const chartPath =
+    points.length === 1
+      ? `M ${paddingX} ${points[0].y} C ${width * 0.34} ${points[0].y - 34}, ${width * 0.66} ${points[0].y + 34}, ${width - paddingX} ${points[0].y}`
+      : points
+          .map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`)
+          .join(" ");
+  const firstPoint = points[0];
+  const lastPoint = points.at(-1);
+  const fillPath =
+    points.length === 1
+      ? `${chartPath} L ${width - paddingX} ${height - paddingBottom} L ${paddingX} ${height - paddingBottom} Z`
+      : `${chartPath} L ${lastPoint?.x || paddingX} ${height - paddingBottom} L ${firstPoint?.x || paddingX} ${height - paddingBottom} Z`;
 
   return (
-    <div className="h-72">
-      <svg className="h-full w-full overflow-visible" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Purchase trend chart">
+    <div className="relative h-72 overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-50 via-white to-cyan-50 p-4 ring-1 ring-emerald-100">
+      <div className="absolute left-5 top-5 rounded-2xl bg-white/85 px-4 py-3 shadow-lg shadow-emerald-100/70 ring-1 ring-white">
+        <p className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-600">Total Purchase</p>
+        <p className="mt-1 text-2xl font-black text-slate-950">{currency.format(total)}</p>
+      </div>
+      <div className="absolute right-5 top-5 rounded-2xl bg-slate-950 px-4 py-3 text-right shadow-lg shadow-slate-200">
+        <p className="text-xs font-bold uppercase tracking-[0.16em] text-cyan-200">Top Month</p>
+        <p className="mt-1 text-lg font-black text-white">{bestPoint.name}</p>
+      </div>
+
+      <svg
+        className="h-full w-full overflow-visible"
+        viewBox={`0 0 ${width} ${height}`}
+        role="img"
+        aria-label="Purchase trend chart"
+      >
+        <defs>
+          <linearGradient id="purchaseLineGradient" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0%" stopColor="#14b8a6" />
+            <stop offset="55%" stopColor="#22c55e" />
+            <stop offset="100%" stopColor="#0ea5e9" />
+          </linearGradient>
+          <linearGradient id="purchaseAreaGradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="#2dd4bf" stopOpacity="0.36" />
+            <stop offset="100%" stopColor="#2dd4bf" stopOpacity="0" />
+          </linearGradient>
+          <filter id="purchaseGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="5" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
         {[0, 1, 2, 3].map((line) => {
-          const y = padding + (line * (height - padding * 2)) / 3;
-          return <line key={line} x1={padding} x2={width - padding} y1={y} y2={y} stroke="#E2E8F0" strokeDasharray="4 4" />;
+          const y = paddingTop + (line * (height - paddingTop - paddingBottom)) / 3;
+          return (
+            <line
+              key={line}
+              x1={paddingX}
+              x2={width - paddingX}
+              y1={y}
+              y2={y}
+              stroke="#CBD5E1"
+              strokeDasharray="6 8"
+              strokeOpacity="0.65"
+            />
+          );
         })}
-        <path d={fillPath} fill="#d1fae5" opacity="0.8" />
-        <path d={path} fill="none" stroke="#10b981" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+        <path d={fillPath} fill="url(#purchaseAreaGradient)" />
+        <path
+          d={chartPath}
+          fill="none"
+          stroke="url(#purchaseLineGradient)"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="7"
+          filter="url(#purchaseGlow)"
+        />
         {points.map((point) => (
           <g key={point.name}>
-            <circle cx={point.x} cy={point.y} r="5" fill="#10b981" stroke="#fff" strokeWidth="3" />
-            <text x={point.x} y={height - 8} textAnchor="middle" className="fill-slate-500 text-[12px] font-semibold">
+            <circle cx={point.x} cy={point.y} r="12" fill="#fff" stroke="#14b8a6" strokeWidth="5" />
+            <circle cx={point.x} cy={point.y} r="4" fill="#0f766e" />
+            <text
+              x={point.x}
+              y={point.y - 18}
+              textAnchor="middle"
+              className="fill-slate-900 text-[13px] font-black"
+            >
+              {currency.format(point.value)}
+            </text>
+            <text x={point.x} y={height - 14} textAnchor="middle" className="fill-slate-600 text-[13px] font-bold">
               {point.name}
             </text>
           </g>
