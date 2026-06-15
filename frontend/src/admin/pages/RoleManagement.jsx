@@ -86,16 +86,24 @@ export default function RoleManagement() {
               usersList.map((user) => {
                 const id = user._id || user.id;
                 return (
-                  <tr key={id || user.email} className="group border-b last:border-b-0 transition-all duration-200 hover:bg-blue-50/70 hover:shadow-[inset_4px_0_0_#3b82f6]">
-                    <td className="p-4 font-semibold text-slate-900">{user.name || "Unnamed"}</td>
-                    <td className="p-4 text-slate-600 transition-colors group-hover:text-slate-800">{user.email}</td>
-                    <td className="p-4 transition-colors group-hover:text-indigo-700">{normalizeRole(user.role)}</td>
+                  <tr key={id || user.email} className="group border-b last:border-b-0 transition-all duration-300 hover:bg-gradient-to-r hover:from-indigo-50 hover:via-blue-50/80 hover:to-white hover:shadow-[inset_5px_0_0_#2563eb]">
+                    <td className="p-4">
+                      <span className="inline-flex rounded-xl px-3 py-2 font-semibold text-slate-900 transition-all duration-300 group-hover:bg-white group-hover:text-blue-700 group-hover:shadow-sm group-hover:shadow-blue-100">
+                        {user.name || "Unnamed"}
+                      </span>
+                    </td>
+                    <td className="p-4 text-slate-600 transition-colors duration-300 group-hover:text-slate-900">{user.email}</td>
+                    <td className="p-4">
+                      <span className="inline-flex rounded-full bg-slate-50 px-3 py-1.5 font-semibold text-slate-700 transition-all duration-300 group-hover:bg-blue-100 group-hover:text-blue-700 group-hover:shadow-sm">
+                        {normalizeRole(user.role)}
+                      </span>
+                    </td>
                     <td className="p-4">
                       <div className="flex items-center gap-3">
                         <select
                           value={normalizeRole(user.role)}
                           onChange={(event) => changeRole(user, event.target.value)}
-                          className="rounded-2xl border border-slate-200 px-4 py-2 transition-all duration-200 hover:border-indigo-300 hover:bg-white hover:shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+                          className="rounded-2xl border border-slate-200 bg-white px-4 py-2 transition-all duration-300 group-hover:border-blue-200 group-hover:shadow-lg group-hover:shadow-blue-100/70 hover:border-blue-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
                         >
                           {roles.map((role) => (
                             <option key={role.value} value={role.value}>{role.label}</option>
