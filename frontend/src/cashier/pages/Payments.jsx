@@ -162,16 +162,24 @@ function Payments() {
             {error}
           </div>
         ) : (
-          <div className="overflow-hidden">
-            <table className="w-full table-fixed text-left text-sm">
+          <div className="cashier-payments-table-wrap overflow-x-auto">
+            <table className="cashier-payments-table w-full table-fixed text-left text-sm">
+              <colgroup>
+                <col className="cashier-payment-id-col" />
+                <col className="cashier-payment-customer-col" />
+                <col className="cashier-payment-amount-col" />
+                <col className="cashier-payment-method-col" />
+                <col className="cashier-payment-reference-col" />
+                <col className="cashier-payment-status-col" />
+              </colgroup>
               <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
                 <tr>
-                  <th className="w-[24%] p-4">Payment ID</th>
-                  <th className="w-[18%] p-4">Customer</th>
-                  <th className="w-[15%] p-4">Amount</th>
-                  <th className="w-[13%] p-4">Method</th>
-                  <th className="w-[16%] p-4">Reference</th>
-                  <th className="w-[14%] p-4">Status</th>
+                  <th className="p-4">Payment ID</th>
+                  <th className="p-4">Customer</th>
+                  <th className="p-4">Amount</th>
+                  <th className="p-4">Method</th>
+                  <th className="p-4">Reference</th>
+                  <th className="p-4">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -197,10 +205,10 @@ function Payments() {
                         key={paymentId}
                         className="border-b last:border-b-0 hover:bg-slate-50"
                       >
-                        <td className="truncate p-4 font-mono text-xs text-slate-700">
+                        <td className="cashier-payment-id-cell truncate p-4 font-mono text-xs text-slate-700">
                           {paymentId}
                         </td>
-                        <td className="truncate p-4 font-medium text-slate-900">
+                        <td className="cashier-payment-customer-cell truncate p-4 font-medium text-slate-900">
                           {customerName}
                         </td>
                         <td className="p-4 font-semibold text-slate-900">

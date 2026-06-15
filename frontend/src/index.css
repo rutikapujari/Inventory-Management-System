@@ -1211,6 +1211,61 @@ body.auth-page.register-page #root :is(div, section, article):has(> form) {
   color: #f8fafc !important;
 }
 
+/* Cashier payments: keep Payment ID compact so Customer sits next to it. */
+.cashier-payments-table-wrap {
+  overflow-x: auto !important;
+}
+
+.cashier-payments-table {
+  min-width: 820px;
+  table-layout: fixed !important;
+}
+
+.cashier-payments-table th,
+.cashier-payments-table td {
+  max-width: none !important;
+  min-width: 0 !important;
+  vertical-align: middle;
+}
+
+.cashier-payments-table th:first-child,
+.cashier-payments-table td:first-child {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+}
+
+.cashier-payment-id-col {
+  width: 25%;
+}
+
+.cashier-payment-customer-col {
+  width: 16%;
+}
+
+.cashier-payment-amount-col {
+  width: 13%;
+}
+
+.cashier-payment-method-col {
+  width: 10%;
+}
+
+.cashier-payment-reference-col {
+  width: 17%;
+}
+
+.cashier-payment-status-col {
+  width: 19%;
+}
+
+.cashier-payment-id-cell,
+.cashier-payment-customer-cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 @media (max-width: 1100px) {
   [data-manager-menu-button] {
     left: 1rem;
