@@ -155,14 +155,7 @@ export default function Users() {
               {filtered.map((usr) => (
                 <tr key={usr._id || usr.id || usr.email} className="hover:bg-slate-50 transition-colors">
                   <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white font-bold text-sm">
-                        {(usr.name || usr.email || 'U').charAt(0).toUpperCase()}
-                      </div>
-                      <div>
-                        <p className="font-bold text-slate-900">{usr.name}</p>
-                      </div>
-                    </div>
+                    <p className="font-bold text-slate-900">{usr.name}</p>
                   </td>
                   <td className="px-6 py-4 text-slate-600">{usr.email}</td>
                   <td className="px-6 py-4">
