@@ -1,26 +1,27 @@
-const redisClient = require("../config/redis");
+const { createClient } = require("redis");
 
-router.get("/products", async (req, res) => {
-  try {
-    const cacheData = await redisClient.get("products");
+const redisUrl = process.env.REDIS_URL;
 
-    if (cacheData) {
-      console.log("Data from Redis");
-      return res.json(JSON.parse(cacheData));
-    }
+let client = null;
 
-    const products = await Product.find();
+if (redisUrl) {
+  client = createClient({ url: redisUrl });
 
-    await redisClient.set(
-      "products",
-      JSON.stringify(products),
-      { EX: 3600 } // 1 hour
-    );
+  client.on("error", (error) => {
+    console.error("Redis error:", error.message);
+  });
+}
 
-    console.log("Data from MongoDB");
-
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+const connectRedis = async () => {
+  if (!client || client.isOpen) {
+    return client;
   }
-});
+
+  await client.connect();
+  return client;
+};
+
+module.exports = {
+  client,
+  connectRedis,
+};
