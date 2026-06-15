@@ -1051,48 +1051,48 @@ body.auth-page.register-page #root :is(div, section, article):has(> form) {
 }
 
 .manager-inventory-table {
-  min-width: 980px;
+  min-width: 900px;
   table-layout: fixed;
 }
 
 .manager-inventory-table th,
 .manager-inventory-table td {
   max-width: none !important;
-  padding-left: 1.25rem !important;
-  padding-right: 1.25rem !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
   vertical-align: middle;
 }
 
-.manager-inventory-table th:nth-child(1),
-.manager-inventory-table td:nth-child(1) {
+.manager-inventory-product-col {
   width: 30%;
-  min-width: 0 !important;
 }
 
-.manager-inventory-table th:nth-child(2),
-.manager-inventory-table td:nth-child(2) {
-  width: 17%;
-}
-
-.manager-inventory-table th:nth-child(3),
-.manager-inventory-table td:nth-child(3) {
-  width: 13%;
-}
-
-.manager-inventory-table th:nth-child(4),
-.manager-inventory-table td:nth-child(4) {
+.manager-inventory-category-col {
   width: 16%;
 }
 
-.manager-inventory-table th:nth-child(5),
-.manager-inventory-table td:nth-child(5) {
-  width: 13%;
-  min-width: 0 !important;
+.manager-inventory-quantity-col {
+  width: 11%;
 }
 
+.manager-inventory-reason-col {
+  width: 16%;
+}
+
+.manager-inventory-status-col {
+  width: 15%;
+}
+
+.manager-inventory-action-col {
+  width: 12%;
+}
+
+.manager-inventory-table th:nth-child(1),
+.manager-inventory-table td:nth-child(1),
+.manager-inventory-table th:nth-child(5),
+.manager-inventory-table td:nth-child(5),
 .manager-inventory-table th:nth-child(6),
 .manager-inventory-table td:nth-child(6) {
-  width: 11%;
   min-width: 0 !important;
 }
 
@@ -1114,20 +1114,31 @@ body.auth-page.register-page #root :is(div, section, article):has(> form) {
   overflow-wrap: anywhere;
 }
 
+.manager-inventory-status-cell {
+  text-align: left;
+}
+
+.manager-inventory-status-badge,
 .manager-inventory-table td:nth-child(5) span {
   display: inline-flex;
-  min-width: 7rem;
+  width: min(100%, 7.25rem);
+  min-width: 0;
+  min-height: 3.5rem;
+  align-items: center;
   justify-content: center;
   white-space: normal;
+  overflow-wrap: normal;
+  text-align: center;
+  line-height: 1.15;
 }
 
 .manager-inventory-table td:nth-child(6) > div {
-  gap: 0.75rem !important;
+  gap: 0.5rem !important;
 }
 
 .manager-inventory-table td:nth-child(6) button {
-  width: 3rem !important;
-  height: 3rem !important;
+  width: 2.75rem !important;
+  height: 2.75rem !important;
 }
 
 /* Cashier dark mode. The switch lives in cashier settings and these scoped

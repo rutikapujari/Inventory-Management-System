@@ -370,6 +370,14 @@ const Inventory = () => {
 
           <div className="manager-inventory-table-wrap bg-white rounded-3xl shadow-sm">
             <table className="manager-inventory-table w-full">
+              <colgroup>
+                <col className="manager-inventory-product-col" />
+                <col className="manager-inventory-category-col" />
+                <col className="manager-inventory-quantity-col" />
+                <col className="manager-inventory-reason-col" />
+                <col className="manager-inventory-status-col" />
+                <col className="manager-inventory-action-col" />
+              </colgroup>
               <thead className="bg-[#f8f9fc] text-gray-500 text-lg">
                 <tr>
                   <th className="p-6 text-left">PRODUCT</th>
@@ -421,9 +429,9 @@ const Inventory = () => {
                       </td>
                       <td className="p-6 text-2xl font-bold">{item.qty}</td>
                       <td className="p-6 text-xl">{item.reason}</td>
-                      <td className="p-6">
+                      <td className="p-6 manager-inventory-status-cell">
                         <span
-                          className={`px-5 py-3 rounded-xl text-lg font-medium ${
+                          className={`manager-inventory-status-badge px-4 py-3 rounded-xl text-base font-semibold ${
                             item.status === "Available"
                               ? "bg-green-100 text-green-700"
                               : item.status === "Low Stock"
