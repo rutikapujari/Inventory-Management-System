@@ -34,28 +34,57 @@ const getArray = (response, key) => {
   return Array.isArray(data) ? data : data[key] || data.data || [];
 };
 
+const getProductStock = (product = {}) =>
+  Number(
+    product.stock ??
+      product.qty ??
+      product.quantity ??
+      product.availableQuantity ??
+      product.currentStock ??
+      0,
+  ) || 0;
+
+const getProductCategory = (product = {}) => {
+  const category = product.category;
+
+  if (category && typeof category === "object") {
+    return category.name || category.title || category.categoryName || "Uncategorized";
+  }
+
+  return product.categoryName || category || "Uncategorized";
+};
+
 function NativeBarChart({ data = [] }) {
   if (!data.length) {
-    return <div className="flex h-80 items-center justify-center text-sm font-semibold text-slate-400">No category data</div>;
+    return (
+      <div className="flex h-80 items-center justify-center rounded-3xl bg-slate-50 text-sm font-semibold text-slate-400">
+        No category data
+      </div>
+    );
   }
 
   const maxValue = Math.max(...data.map((item) => Number(item.value) || 0), 1);
 
   return (
-    <div className="h-80">
-      <div className="flex h-64 items-end gap-4 border-b border-l border-slate-200 px-3 pb-3">
+    <div className="h-80 rounded-3xl bg-gradient-to-b from-slate-50 to-white px-4 pb-4 pt-6">
+      <div className="flex h-64 items-end gap-4 border-b border-l border-slate-300 px-3 pb-3">
         {data.map((item) => {
           const value = Number(item.value) || 0;
-          const height = Math.max((value / maxValue) * 220, 12);
+          const height = Math.max((value / maxValue) * 210, value > 0 ? 24 : 8);
 
           return (
             <div key={item.name} className="flex min-w-0 flex-1 flex-col items-center gap-2">
               <div className="flex h-56 w-full items-end justify-center">
-                <div
-                  className="w-full max-w-16 rounded-t-xl bg-gradient-to-t from-blue-600 to-cyan-400 shadow-lg shadow-blue-100"
-                  style={{ height: `${height}px` }}
-                  title={`${item.name}: ${value}`}
-                />
+                <div className="flex w-full max-w-20 flex-col items-center justify-end gap-2">
+                  <span className="rounded-full bg-slate-900 px-2 py-1 text-xs font-bold text-white shadow-sm">
+                    {value}
+                  </span>
+                  <div
+                    className="w-full rounded-t-xl bg-gradient-to-t from-blue-600 to-cyan-400 shadow-lg shadow-blue-100"
+                    style={{ height: `${height}px` }}
+                    title={`${item.name}: ${value}`}
+                  />
+                </div>
               </div>
               <span className="max-w-full truncate text-xs font-semibold text-slate-500" title={item.name}>
                 {item.name}
@@ -70,43 +99,47 @@ function NativeBarChart({ data = [] }) {
 
 function NativeDonutChart({ data = [], colors = [] }) {
   if (!data.length) {
-    return <div className="flex h-72 items-center justify-center text-sm font-semibold text-slate-400">No stock data</div>;
+    return (
+      <div className="flex h-72 items-center justify-center rounded-3xl bg-slate-50 text-sm font-semibold text-slate-400">
+        No stock data
+      </div>
+    );
   }
 
   const total = data.reduce((sum, item) => sum + (Number(item.value) || 0), 0);
   if (!total) {
-    return <div className="flex h-72 items-center justify-center text-sm font-semibold text-slate-400">No stock data</div>;
+    return (
+      <div className="flex h-72 items-center justify-center rounded-3xl bg-slate-50 text-sm font-semibold text-slate-400">
+        No stock data
+      </div>
+    );
   }
 
   const safeColors = colors.length ? colors : ["#2563eb"];
-  let cumulative = 0;
+  let cumulativePercent = 0;
+  const gradientStops = data
+    .map((item, index) => {
+      const percent = ((Number(item.value) || 0) / total) * 100;
+      const start = cumulativePercent;
+      cumulativePercent += percent;
+      const color = safeColors[index % safeColors.length];
+      return `${color} ${start}% ${cumulativePercent}%`;
+    })
+    .join(", ");
 
   return (
     <div className="flex h-72 items-center justify-center">
-      <svg className="h-56 w-56 -rotate-90 drop-shadow-sm" viewBox="0 0 120 120" role="img" aria-label="Stock health chart">
-        <circle cx="60" cy="60" r="42" fill="none" stroke="#F1F5F9" strokeWidth="18" />
-        {data.map((item, index) => {
-          const percent = (Number(item.value) || 0) / total;
-          const dashArray = `${percent * 263.89} 263.89`;
-          const dashOffset = -cumulative * 263.89;
-          cumulative += percent;
-
-          return (
-            <circle
-              key={item.name}
-              cx="60"
-              cy="60"
-              r="42"
-              fill="none"
-              stroke={safeColors[index % safeColors.length]}
-              strokeWidth="18"
-              strokeDasharray={dashArray}
-              strokeDashoffset={dashOffset}
-              strokeLinecap="round"
-            />
-          );
-        })}
-      </svg>
+      <div
+        className="relative h-56 w-56 rounded-full shadow-xl shadow-slate-200"
+        style={{ background: `conic-gradient(${gradientStops})` }}
+        role="img"
+        aria-label="Stock health chart"
+      >
+        <div className="absolute inset-10 flex flex-col items-center justify-center rounded-full bg-white shadow-inner">
+          <span className="text-3xl font-black text-slate-950">{total}</span>
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Items</span>
+        </div>
+      </div>
     </div>
   );
 }
@@ -193,7 +226,7 @@ export default function Report() {
     () =>
       products.reduce(
         (sum, item) =>
-          sum + Number(item.sellingPrice || item.price || 0) * Number(item.stock || 0),
+          sum + Number(item.sellingPrice || item.price || 0) * getProductStock(item),
         0,
       ),
     [products],
@@ -201,12 +234,15 @@ export default function Report() {
 
   const categoryData = useMemo(() => {
     const grouped = products.reduce((acc, product) => {
-      const category = product.category?.name || product.category || "Uncategorized";
-      acc[category] = (acc[category] || 0) + Number(product.stock || 0);
+      const category = getProductCategory(product);
+      const stock = getProductStock(product);
+      acc[category] = (acc[category] || 0) + stock;
       return acc;
     }, {});
 
-    return Object.entries(grouped).map(([name, value]) => ({ name, value }));
+    return Object.entries(grouped)
+      .map(([name, value]) => ({ name, value }))
+      .filter((item) => item.value > 0);
   }, [products]);
 
   const purchaseTrend = useMemo(() => {
@@ -267,8 +303,8 @@ export default function Report() {
       ...products.map((product) => [
         product.name || "",
         product.sku || "",
-        product.category?.name || product.category || "",
-        product.stock ?? 0,
+        getProductCategory(product),
+        getProductStock(product),
         product.sellingPrice ?? product.price ?? "",
         product.costPrice ?? "",
       ]),
@@ -436,7 +472,7 @@ export default function Report() {
                       <tr key={product._id || product.id || product.sku} className="hover:bg-slate-50">
                         <td className="px-6 py-4 font-bold text-slate-900">{product.name}</td>
                         <td className="px-6 py-4 text-slate-600">{product.sku || "-"}</td>
-                        <td className="px-6 py-4 font-bold text-slate-900">{product.stock ?? 0}</td>
+                        <td className="px-6 py-4 font-bold text-slate-900">{getProductStock(product)}</td>
                         <td className="px-6 py-4">
                           <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700">
                             Reorder
