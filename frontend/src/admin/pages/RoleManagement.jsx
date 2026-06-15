@@ -59,7 +59,7 @@ export default function RoleManagement() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {roleCounts.map((role) => (
-          <div key={role.value} className="rounded-3xl bg-white border border-slate-100 p-6 shadow-sm">
+          <div key={role.value} className="rounded-3xl bg-white border border-slate-100 p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-indigo-100 hover:shadow-xl hover:shadow-indigo-100/60">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-500">{role.label}</p>
@@ -86,16 +86,16 @@ export default function RoleManagement() {
               usersList.map((user) => {
                 const id = user._id || user.id;
                 return (
-                  <tr key={id || user.email} className="border-b last:border-b-0">
+                  <tr key={id || user.email} className="group border-b last:border-b-0 transition-all duration-200 hover:bg-blue-50/70 hover:shadow-[inset_4px_0_0_#3b82f6]">
                     <td className="p-4 font-semibold text-slate-900">{user.name || "Unnamed"}</td>
-                    <td className="p-4 text-slate-600">{user.email}</td>
-                    <td className="p-4">{normalizeRole(user.role)}</td>
+                    <td className="p-4 text-slate-600 transition-colors group-hover:text-slate-800">{user.email}</td>
+                    <td className="p-4 transition-colors group-hover:text-indigo-700">{normalizeRole(user.role)}</td>
                     <td className="p-4">
                       <div className="flex items-center gap-3">
                         <select
                           value={normalizeRole(user.role)}
                           onChange={(event) => changeRole(user, event.target.value)}
-                          className="rounded-2xl border border-slate-200 px-4 py-2"
+                          className="rounded-2xl border border-slate-200 px-4 py-2 transition-all duration-200 hover:border-indigo-300 hover:bg-white hover:shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100"
                         >
                           {roles.map((role) => (
                             <option key={role.value} value={role.value}>{role.label}</option>
